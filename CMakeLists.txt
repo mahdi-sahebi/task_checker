@@ -7,5 +7,3 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(src)
 
-set(QML_IMPORT_PATH ${CMAKE_SROUCE_DIR}/qml)
-qt5_add_resources(QML_RESOURCES qml/qml.qrc)
