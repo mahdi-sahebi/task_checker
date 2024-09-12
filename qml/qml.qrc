@@ -1,9 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>assets/wait.png</file>
-        <file>assets/true.png</file>
-        <file>assets/false.png</file>
-        <file>assets/check.png</file>
+        <file>TaskItem/TaskItem.qml</file>
+        <file>TaskItem/assets/check.png</file>
+        <file>TaskItem/assets/false.png</file>
+        <file>TaskItem/assets/true.png</file>
+        <file>TaskItem/assets/wait.png</file>
     </qresource>
 </RCC>

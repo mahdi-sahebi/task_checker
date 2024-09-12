@@ -8,8 +8,10 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
+add_subdirectory(task_item)
+
 add_executable(${APP} ${HEADERS} ${SOURCES})
 
 target_link_libraries(${APP}
-    PRIVATE Qt5::Core Qt5::Quick
+    PRIVATE Qt5::Core Qt5::Quick task_item
 )

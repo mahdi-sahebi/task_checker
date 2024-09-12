@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
+import "TaskItem"
 
 Window
 {
@@ -88,73 +89,8 @@ Window
                     height: parent.height - 30
                     anchors.centerIn: parent
 
-                    Row
+                    TaskItem
                     {
-                        width: parent.width
-                        height: 40
-
-                        Image
-                        {
-                            source: "assets/check.png"
-                            width: 20
-                            height: 20
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                        Text
-                        {
-                            color: "#f0f0f0"
-                            text: "Sample text item"
-                            font.pointSize: 16
-                            anchors.left: parent.left
-                            anchors.leftMargin: 30
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-
-                    Row
-                    {
-                        width: parent.width
-                        height: 40
-
-                        Image
-                        {
-                            source: "assets/check.png"
-                            width: 20
-                            height: 20
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                        Text
-                        {
-                            color: "#f0f0f0"
-                            text: "Sample text item"
-                            font.pointSize: 16
-                            anchors.left: parent.left
-                            anchors.leftMargin: 30
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-
-                    Row
-                    {
-                        width: parent.width
-                        height: 40
-
-                        Image
-                        {
-                            source: "assets/check.png"
-                            width: 20
-                            height: 20
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                        Text
-                        {
-                            color: "#f0f0f0"
-                            text: "Sample text item"
-                            font.pointSize: 16
-                            anchors.left: parent.left
-                            anchors.leftMargin: 30
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
                     }
                 }
             }
