@@ -1,5 +1,5 @@
 #set(HEADERS)
-set(SOURCES main.cpp ${PROJECT_SOURCE_DIR}/qml/qml.qrc)
+set(SOURCES main.cpp ${PROJECT_SOURCE_DIR}/qml/qml.qrc ${PROJECT_SOURCE_DIR}/qml/main.qml)
 set(APP ${PROJECT_NAME})
 
 set(CMAKE_AUTOUIC ON)
