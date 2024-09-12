@@ -93,9 +93,9 @@ Window
                         width: parent.width
                         height: 40
 
-                        Rectangle
+                        Image
                         {
-                            color: "#ff8000"
+                            source: "assets/check.png"
                             width: 20
                             height: 20
                             anchors.verticalCenter: parent.verticalCenter
@@ -116,9 +116,9 @@ Window
                         width: parent.width
                         height: 40
 
-                        Rectangle
+                        Image
                         {
-                            color: "#ff8000"
+                            source: "assets/check.png"
                             width: 20
                             height: 20
                             anchors.verticalCenter: parent.verticalCenter
@@ -139,9 +139,9 @@ Window
                         width: parent.width
                         height: 40
 
-                        Rectangle
+                        Image
                         {
-                            color: "#ff8000"
+                            source: "assets/check.png"
                             width: 20
                             height: 20
                             anchors.verticalCenter: parent.verticalCenter

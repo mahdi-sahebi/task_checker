@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>assets/wait.png</file>
+        <file>assets/true.png</file>
+        <file>assets/false.png</file>
+        <file>assets/check.png</file>
     </qresource>
 </RCC>
