@@ -11,7 +11,7 @@ Row
     Image
     {
         id: image1
-        source: "assets/check.png"
+        source: task_item.image_path
         width: 20
         height: 20
         anchors.verticalCenter: parent.verticalCenter
