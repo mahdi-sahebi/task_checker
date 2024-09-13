@@ -1,8 +1,9 @@
-#include "task_item.h"
+#include "task_item/task_item.h"
 
 TaskItem::TaskItem(QObject* parent)
 {
   (void)parent;
+  SetTitle("Hi mahdi");
 }
 
 TaskItem::~TaskItem()
@@ -21,3 +22,7 @@ void TaskItem::SetTitle(const QString& title)
   emit OnTitleChanged();
 }
 
+void TaskItem::Check()
+{
+
+}

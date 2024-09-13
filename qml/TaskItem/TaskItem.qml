@@ -6,6 +6,8 @@ Row
     width: parent.width
     height: 40
 
+    property string title: "";
+
     Image
     {
         id: image1
@@ -20,6 +22,7 @@ Row
 
             onClicked:
             {
+                task_item.Check();
             }
         }
     }
@@ -27,7 +30,7 @@ Row
     Text
     {
         color: "#f0f0f0"
-        text: "Sample text item"
+        text: task_item.title
         font.pointSize: 16
         anchors.left: parent.left
         anchors.leftMargin: 30

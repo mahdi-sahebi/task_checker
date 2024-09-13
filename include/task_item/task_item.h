@@ -7,6 +7,7 @@
 class TaskItem : public QObject
 {
 Q_OBJECT
+Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY OnTitleChanged)
 
 public:
   explicit TaskItem(QObject* parent = nullptr);
@@ -14,6 +15,8 @@ public:
 
   QString GetTitle();
   void SetTitle(const QString& title);
+
+  Q_INVOKABLE void Check();
 
 signals:
   void OnTitleChanged();
