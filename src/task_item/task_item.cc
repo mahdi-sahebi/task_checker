@@ -1,10 +1,11 @@
 #include "task_item/task_item.h"
 
+
 TaskItem::TaskItem(QObject* parent)
 {
   (void)parent;
   SetTitle("");
-  SetState(State::CHECK);
+  SetState(State::kIdle);
 }
 
 TaskItem::~TaskItem()
@@ -25,17 +26,22 @@ void TaskItem::SetTitle(const QString& title)
 
 void TaskItem::Check()
 {
+    SetState(State::kWait);
 
+    // TODO(MN): Run on another thread as non-blocking
+
+    const State state = State::kFail; // TODO(MN): Call from callback
+    SetState(state);
 }
 
 void TaskItem::SetState(const State state)
 {
   QString files[] =
   {
-    [static_cast<uint32_t>(State::CHECK)  ] = "assets/check.png",
-    [static_cast<uint32_t>(State::WAIT)   ] = "assets/wait.png",
-    [static_cast<uint32_t>(State::FAIL)   ] = "assets/false.png",
-    [static_cast<uint32_t>(State::SUCCESS)] = "assets/true.png",
+    [static_cast<uint32_t>(State::kIdle)] = "assets/check.png",
+    [static_cast<uint32_t>(State::kWait)] = "assets/wait.png",
+    [static_cast<uint32_t>(State::kFail)] = "assets/false.png",
+    [static_cast<uint32_t>(State::kDone)] = "assets/true.png",
   };
 
   SetImagePath(files[static_cast<uint32_t>(state)]);
