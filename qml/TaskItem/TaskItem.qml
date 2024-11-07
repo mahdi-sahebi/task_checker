@@ -6,11 +6,9 @@ Row
     width: parent.width
     height: 40
 
-    property string title: "";
-
     Image
     {
-        id: image1
+        id: button
         source: task_item.image_path
         width: 20
         height: 20
@@ -19,6 +17,7 @@ Row
         MouseArea
         {
             anchors.fill: parent
+            enabled: task_item.is_enabled
 
             onClicked:
             {

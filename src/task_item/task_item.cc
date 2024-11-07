@@ -3,7 +3,7 @@
 using namespace std;
 
 TaskItem::TaskItem(string title, const Task& task, QObject* parent) :
-    task_{task}
+    task_{task}, is_enabled_{true}
 {
   (void)parent;
   SetTitle(QString::fromStdString(title));
@@ -28,15 +28,14 @@ void TaskItem::SetTitle(const QString& title)
 
 void TaskItem::Check()
 {
-    // TODO(MN): Handle run before last task is done
-    std::unique_lock lock(task_mutex_);
-
+    SetEnable(false);
     SetState(State::kWait);
 
-    std::thread([&](){
+    std::thread([this](){
         // TODO(MN): Handle timeout
         const State state = task_() ? State::kDone : State::kFail;
         SetState(state);
+        SetEnable(true);
     }).detach();
 }
 
@@ -61,4 +60,15 @@ void TaskItem::SetImagePath(const QString& image_path)
 {
   image_path_ = image_path;
   emit OnImagePathChanged();
+}
+
+bool TaskItem::IsEnabled()
+{
+    return is_enabled_;
+}
+
+void TaskItem::SetEnable(const bool enable)
+{
+    is_enabled_ = enable;
+    emit OnEnableChanged();
 }
