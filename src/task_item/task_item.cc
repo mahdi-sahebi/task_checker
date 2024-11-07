@@ -1,11 +1,12 @@
 #include "task_item/task_item.h"
 
+using namespace std;
 
-TaskItem::TaskItem(const Task& task, QObject* parent) :
+TaskItem::TaskItem(string title, const Task& task, QObject* parent) :
     task_{task}
 {
   (void)parent;
-  SetTitle("");
+  SetTitle(QString::fromStdString(title));
   SetState(State::kFail);
 }
 

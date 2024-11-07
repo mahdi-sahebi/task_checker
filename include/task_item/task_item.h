@@ -2,6 +2,7 @@
 #define TASK_ITEM_H_
 
 #include <cstdbool>
+#include <string>
 #include <functional>
 #include <mutex>
 #include <thread>
@@ -25,7 +26,7 @@ public:
 
   using Task = std::function<bool()>;
 
-  explicit TaskItem(const Task& task, QObject* parent = nullptr);
+  explicit TaskItem(std::string title, const Task& task, QObject* parent = nullptr);
   ~TaskItem();
 
   QString GetTitle();
