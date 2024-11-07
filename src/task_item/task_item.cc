@@ -1,11 +1,12 @@
 #include "task_item/task_item.h"
 
 
-TaskItem::TaskItem(QObject* parent)
+TaskItem::TaskItem(const Task& task, QObject* parent) :
+    task_{task}
 {
   (void)parent;
   SetTitle("");
-  SetState(State::kIdle);
+  SetState(State::kFail);
 }
 
 TaskItem::~TaskItem()
@@ -26,19 +27,22 @@ void TaskItem::SetTitle(const QString& title)
 
 void TaskItem::Check()
 {
+    // TODO(MN): Handle run before last task is done
+    std::unique_lock lock(task_mutex_);
+
     SetState(State::kWait);
 
-    // TODO(MN): Run on another thread as non-blocking
-
-    const State state = State::kFail; // TODO(MN): Call from callback
-    SetState(state);
+    std::thread([&](){
+        // TODO(MN): Handle timeout
+        const State state = task_() ? State::kDone : State::kFail;
+        SetState(state);
+    }).detach();
 }
 
 void TaskItem::SetState(const State state)
 {
   QString files[] =
   {
-    [static_cast<uint32_t>(State::kIdle)] = "assets/check.png",
     [static_cast<uint32_t>(State::kWait)] = "assets/wait.png",
     [static_cast<uint32_t>(State::kFail)] = "assets/false.png",
     [static_cast<uint32_t>(State::kDone)] = "assets/true.png",

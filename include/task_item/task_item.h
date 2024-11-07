@@ -1,6 +1,10 @@
 #ifndef TASK_ITEM_H_
 #define TASK_ITEM_H_
 
+#include <cstdbool>
+#include <functional>
+#include <mutex>
+#include <thread>
 #include <QObject>
 #include <QString>
 
@@ -14,13 +18,14 @@ Q_PROPERTY(QString image_path READ GetImagePath WRITE SetImagePath NOTIFY OnImag
 public:
   enum class State
   {
-    kIdle,
     kWait,
     kFail,
     kDone
   };
 
-  explicit TaskItem(QObject* parent = nullptr);
+  using Task = std::function<bool()>;
+
+  explicit TaskItem(const Task& task, QObject* parent = nullptr);
   ~TaskItem();
 
   QString GetTitle();
@@ -36,6 +41,8 @@ signals:
 private:
   QString title_;
   QString image_path_;
+  const Task& task_;
+  std::mutex task_mutex_;
 
   Q_INVOKABLE void SetState(const State state);
 };
