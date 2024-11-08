@@ -15,7 +15,9 @@ public:
     explicit TaskContainer(QObject* parent = nullptr);
     ~TaskContainer();
     Q_INVOKABLE void Add();
-    Q_INVOKABLE void Remove(const uint32_t index);
+    Q_INVOKABLE void Remove(const unsigned int index);
+    Q_INVOKABLE void Clear();
+    Q_INVOKABLE int GetCount();
     QVariantList GetList();
     void SetList(const QVariantList& list);
 
