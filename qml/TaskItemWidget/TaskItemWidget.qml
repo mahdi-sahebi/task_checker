@@ -1,10 +1,13 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
+import Task.Item 1.0
 
 Row
 {
     width: parent.width
     height: 40
+
+    property TaskItem task_item
 
     Image
     {
@@ -19,8 +22,7 @@ Row
             anchors.fill: parent
             enabled: task_item.is_enabled
 
-            onClicked:
-            {
+            onClicked: {
                 task_item.Check();
             }
         }

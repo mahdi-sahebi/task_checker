@@ -1,10 +1,13 @@
 # Headers
 set(PUBLIC_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
 set(PRIVATE_INCLUDE_DIRS )
-set(HEADERS ${PUBLIC_INCLUDE_DIRS}/task_item/task_item.h)
+set(HEADERS
+    ${PUBLIC_INCLUDE_DIRS}/task_item/task_item.h
+    ${PUBLIC_INCLUDE_DIRS}/task_item/task_container.h
+)
 
 # Sources
-set(SOURCES task_item.cc)
+set(SOURCES task_item.cc task_container.cc)
 
 # Libraries
 set(PUBLIC_LIBRARIES Qt5::Core Qt5::Quick)
