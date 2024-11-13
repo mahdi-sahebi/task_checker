@@ -13,7 +13,15 @@ TaskContainer::~TaskContainer()
 
 void TaskContainer::Add()
 {
-    TaskItem* const task_item = new TaskItem("hi", [](){return false;});
+    TaskItem* const task_item = TaskItem::Build()
+            ->SetTitle("Example")
+            ->SetTask([]()
+        {
+            static bool result = 0;
+            result = !result;
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            return result;
+        });
     if (nullptr != task_item) {
         list_.append(QVariant::fromValue(task_item));
 

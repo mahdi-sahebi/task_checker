@@ -8,7 +8,7 @@
 #include <QObject>
 #include <QString>
 
-
+// namespace Task::Item
 class TaskItem : public QObject
 {
 Q_OBJECT
@@ -26,15 +26,19 @@ public:
 
   using Task = std::function<bool()>;
 
-  explicit TaskItem(std::string title, const Task& task, QObject* parent = nullptr);
+  explicit TaskItem(QObject* parent = nullptr);
+  TaskItem(const TaskItem& other) = delete;
   ~TaskItem();
 
+  static TaskItem* Build();
+
   QString GetTitle();
-  void    SetTitle(const QString& title);
+  TaskItem* SetTitle(const QString& title);
   QString GetImagePath();
   void    SetImagePath(const QString& image_path);
   bool    IsEnabled();
-  void    SetEnable(const bool enable);
+  TaskItem* SetEnable(const bool enable);
+  TaskItem* SetTask(const Task task);
   Q_INVOKABLE void Check();
 
 signals:
@@ -46,9 +50,9 @@ private:
   bool is_enabled_;
   QString title_;
   QString image_path_;
-  const Task& task_;
+  Task task_;
 
-  Q_INVOKABLE void SetState(const State state);
+  void SetState(const State state);
 };
 
 #endif /* TASK_ITEM_H_ */

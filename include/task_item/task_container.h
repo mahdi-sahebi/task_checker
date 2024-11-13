@@ -13,6 +13,7 @@ class TaskContainer : public QObject
 
 public:
     explicit TaskContainer(QObject* parent = nullptr);
+    TaskContainer(const TaskContainer& other) = delete;
     ~TaskContainer();
     Q_INVOKABLE void Add();
     Q_INVOKABLE void Remove(const unsigned int index);

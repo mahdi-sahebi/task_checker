@@ -1,12 +1,15 @@
+#include <QDebug>
 #include "task_item/task_item.h"
+
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
-TaskItem::TaskItem(string title, const Task& task, QObject* parent) :
-    task_{task}, is_enabled_{true}
+TaskItem::TaskItem(QObject* parent) :
+    is_enabled_{true}, task_{nullptr}
 {
   (void)parent;
-  SetTitle(QString::fromStdString(title));
   SetState(State::kFail);
 }
 
@@ -15,19 +18,30 @@ TaskItem::~TaskItem()
 
 }
 
+TaskItem* TaskItem::Build()
+{
+    return new TaskItem();
+}
+
 QString TaskItem::GetTitle()
 {
   return title_;
 }
 
-void TaskItem::SetTitle(const QString& title)
+TaskItem* TaskItem::SetTitle(const QString& title)
 {
   title_ = title;
   emit OnTitleChanged();
+  return this;
 }
 
 void TaskItem::Check()
 {
+    if (nullptr == task_) {
+        qDebug() << "[TaskItem] Callback hasn't been set";
+        return;
+    }
+
     SetEnable(false);
     SetState(State::kWait);
 
@@ -67,8 +81,15 @@ bool TaskItem::IsEnabled()
     return is_enabled_;
 }
 
-void TaskItem::SetEnable(const bool enable)
+TaskItem* TaskItem::SetEnable(const bool enable)
 {
     is_enabled_ = enable;
     emit OnEnableChanged();
+    return this;
+}
+
+TaskItem* TaskItem::SetTask(const Task task)
+{
+    task_ = task;
+    return this;
 }
