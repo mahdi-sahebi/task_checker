@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import "TaskItem"
+import "TaskItemWidget"
+import Task.Container 1.0
 
 Window
 {
@@ -89,8 +90,14 @@ Window
                     height: parent.height - 30
                     anchors.centerIn: parent
 
-                    TaskItem
-                    {
+                    TaskContainer {
+                        id: task_container
+                    }
+                    Repeater {
+                        model: task_container.list
+                        delegate: TaskItemWidget {
+                            task_item: modelData
+                        }
                     }
                 }
             }
