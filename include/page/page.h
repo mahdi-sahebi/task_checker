@@ -2,9 +2,10 @@
 #define PAGE_H_
 
 #include <cstdint>
+#include <functional>
 #include <QString>
 #include <QObject>
-//#include <task_item/task_container.h>
+#include <task_item/task_container.h>
 
 class Page : public QObject
 {
@@ -24,6 +25,10 @@ public:
     float GetProgress();
     uint8_t GetTasksCount();
 
+    void AddTask(const uint8_t id, const QString title, std::function<void()> task);
+    void RemoveTask(const uint8_t task_index);
+    void ClearTasks();
+
 signals:
     void OnTitleChanged();
     void OnProgressChanged();
@@ -33,7 +38,7 @@ private:
     QString title_;
     float progress_;// TODO(MN): Remove - calculate
     uint8_t tasks_count_;
-//    TaskContainer task_container_;
+    TaskContainer* task_container_;
 
     void SetProgress(const float& percent);
     void SetTasksCount(const uint8_t& count);

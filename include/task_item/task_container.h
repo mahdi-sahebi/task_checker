@@ -20,7 +20,7 @@ public:
     Q_INVOKABLE void Clear();
     Q_INVOKABLE int GetCount();
     QVariantList GetList();
-    void SetList(const QVariantList& list);
+    void SetList(const QVariantList& list);// TODO(MN): Private
 
 signals:
     void OnListChanged();
