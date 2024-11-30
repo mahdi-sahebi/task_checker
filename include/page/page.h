@@ -25,8 +25,8 @@ public:
     float GetProgress() const noexcept;
     uint8_t GetTasksCount();
 
-    void AddTask(const uint8_t id, const QString title, std::function<void()> task);
-    void RemoveTask(const uint8_t id);
+    void AddTask(const uint8_t task_id, const QString title, std::function<void()> task);
+    void RemoveTask(const uint8_t task_id);
     void ClearTasks();
 
     Q_INVOKABLE uint32_t GetID() const noexcept;

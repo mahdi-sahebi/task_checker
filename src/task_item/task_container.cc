@@ -45,6 +45,7 @@ void TaskContainer::Remove(const unsigned int index)
 
 void TaskContainer::Clear()
 {
+    // TOOD(MN): Iterate on list and delete the task objects
     uint32_t index = list_.size();
 
     while (index--) {

@@ -12,7 +12,7 @@ Page::Page(const uint32_t id) :
 
 Page::~Page()
 {
-    // TODO(MN): Task container
+    ClearTasks();
 }
 
 QString Page::GetTitle() const noexcept
@@ -48,16 +48,16 @@ void Page::SetTasksCount(const uint8_t& count)
     emit OnTasksCountChanged();
 }
 
-void Page::AddTask(const uint8_t id, const QString title, std::function<void()> task)
+void Page::AddTask(const uint8_t task_id, const QString title, std::function<void()> task)
 {
     // TODO(MN): Connect arguments
     task_container_->Add();
 }
 
-void Page::RemoveTask(const uint8_t id)
+void Page::RemoveTask(const uint8_t task_id)
 {
     // TODO(MN): Use correct concept of task id instead of index
-    task_container_->Remove(id);
+    task_container_->Remove(task_id);
 }
 
 void Page::ClearTasks()
