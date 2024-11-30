@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include "task_item/task_item.h"
 #include "task_item/task_container.h"
+#include "page/page_container.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +14,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<TaskContainer>("Task.Container", 1, 0, "TaskContainer");
 
     QQmlApplicationEngine engine;
-//    engine.rootContext()->setContextProperty("task_item", new TaskItem());
+    auto page_container = new PageContainer();
+    engine.rootContext()->setContextProperty("page_container", page_container);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app, [url](QObject *obj, const QUrl &objUrl) {
