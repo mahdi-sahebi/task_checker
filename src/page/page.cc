@@ -1,6 +1,7 @@
 #include "page/page.h"
 
-Page::Page() :
+Page::Page(const uint32_t id) :
+    id_{id},
     title_{""},
     progress_{0.0F},
     tasks_count_{0},
@@ -14,7 +15,7 @@ Page::~Page()
     // TODO(MN): Task container
 }
 
-QString Page::GetTitle()
+QString Page::GetTitle() const noexcept
 {
     return title_;
 }
@@ -25,7 +26,7 @@ void Page::SetTitle(const QString& title)
     emit OnTitleChanged();
 }
 
-float Page::GetProgress()
+float Page::GetProgress() const noexcept
 {
     return 0.0F;
 }
@@ -62,4 +63,9 @@ void Page::RemoveTask(const uint8_t id)
 void Page::ClearTasks()
 {
     task_container_->Clear();
+}
+
+uint32_t Page::GetID() const noexcept
+{
+    return id_;
 }
