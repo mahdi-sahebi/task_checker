@@ -2,11 +2,12 @@
 set(PRIVATE_INCLUDE_DIRS "")
 set(PUBLIC_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
 set(HEADERS
+    ${PUBLIC_INCLUDE_DIRS}/page/page_container.h
     ${PUBLIC_INCLUDE_DIRS}/page/page.h
 )
 
 # Sources
-set(SOURCES page.cc)
+set(SOURCES page_container.cc page.cc)
 
 # Libraries
 set(PRIVATE_LIBRARIES "")

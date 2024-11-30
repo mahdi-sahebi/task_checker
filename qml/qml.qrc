@@ -6,5 +6,6 @@
         <file>PageWidget/TaskItemWidget/assets/wait.png</file>
         <file>PageWidget/TaskItemWidget/TaskItemWidget.qml</file>
         <file>PageWidget/PageWidget.qml</file>
+        <file>PageWidget/PageContainerWidget.qml</file>
     </qresource>
 </RCC>

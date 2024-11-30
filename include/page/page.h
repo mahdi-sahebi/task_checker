@@ -26,7 +26,7 @@ public:
     uint8_t GetTasksCount();
 
     void AddTask(const uint8_t id, const QString title, std::function<void()> task);
-    void RemoveTask(const uint8_t task_index);
+    void RemoveTask(const uint8_t id);
     void ClearTasks();
 
 signals:
@@ -36,7 +36,7 @@ signals:
 
 private:
     QString title_;
-    float progress_;// TODO(MN): Remove - calculate
+    float progress_;
     uint8_t tasks_count_;
     TaskContainer* task_container_;
 
