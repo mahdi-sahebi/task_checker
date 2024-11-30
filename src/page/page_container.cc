@@ -1,3 +1,4 @@
+#include "page/page.h"
 #include "page/page_container.h"
 
 
@@ -13,19 +14,35 @@ PageContainer::~PageContainer()
 
 bool PageContainer::Add(const uint16_t id, const QString& title)
 {
-    return false;
+    auto page = new Page(id);// TODO(MN): Use builder
+    if (nullptr == page) {
+        return false;
+    }
 
-    //
+    page->SetTitle(title);
+    list_.append(QVariant::fromValue(page));
     emit OnListChanged();
     return true;
 }
 
 bool PageContainer::Remove(const uint16_t id)
 {
-    return false;
+    const uint32_t size = static_cast<uint32_t>(list_.size());
 
-    emit OnListChanged();
-    return true;
+    for (uint32_t index = 0; index < size; index++) {
+        const auto page = list_[index].value<Page*>();
+
+        if (page->GetID() == id) {
+            continue;
+        }
+
+        delete page;
+        list_.removeAt(index);
+        emit OnListChanged();
+        return true;
+    }
+
+    return false;
 }
 
 QVariantList PageContainer::GetList()
@@ -35,6 +52,14 @@ QVariantList PageContainer::GetList()
 
 void PageContainer::Clear()
 {
-    // TODO(MN): iterate on all list and delete the Page class
-    list_.clear();
+    uint32_t index = static_cast<uint32_t>(list_.size());
+
+    while (index--) {
+        const auto page = list_[index].value<Page*>();
+        delete page;
+
+        list_.removeAt(index);
+    }
+
+    emit OnListChanged();
 }
