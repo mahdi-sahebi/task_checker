@@ -1,7 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import "PageWidget"
-import "PageContainerWidget"
+import "PageWidget"// TODO(MN): rename to Page
 
 Window
 {
@@ -11,7 +10,8 @@ Window
     height: 800
     title: "Hello World"
     color: "#f0f0f0"
+    // TODO(MN): Manage resizing
 
-    PageWidget {
+    PageContainerWidget {
     }
 }

@@ -5,8 +5,7 @@ import Task.Container 1.0
 
 Column
 {
-    width: parent.width
-    height: parent.height
+    anchors.fill: parent
     anchors.centerIn: parent
 
     Row

@@ -24,5 +24,7 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
+    page_container->Add(0, "Page 1");
+
     return app.exec();
 }
