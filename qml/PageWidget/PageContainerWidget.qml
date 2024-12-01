@@ -15,3 +15,4 @@ Rectangle {
 }
 
 
+//page container in qml is not on the page class

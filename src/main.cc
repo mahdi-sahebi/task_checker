@@ -6,6 +6,9 @@
 #include "page/page.h"
 #include "page/page_container.h"
 
+#include <thread>
+#include <chrono>
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -27,7 +30,29 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
-    page_container->Add(0, "Page 1");
+    auto page = page_container->Add(0, "Page 1");
+    page->SetTitle("kkk");
+    page->ClearTasks();
+    page->AddTask(100, "Task description 100", []() {
+        static bool f = false;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        f = !f;
+        return f;
+    });
+
+    page->AddTask(101, "Task description 101", []() {
+        static bool f = false;
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+        f = !f;
+        return f;
+    });
+
+    page->AddTask(102, "Task description 102", []() {
+        static bool f = false;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        f = !f;
+        return f;
+    });
 
     return app.exec();
 }

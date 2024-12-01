@@ -5,6 +5,7 @@
 #include <functional>
 #include <QString>
 #include <QObject>
+#include <QVariantList>
 #include <task_item/task_container.h>
 
 class Page : public QObject
@@ -13,6 +14,7 @@ class Page : public QObject
     Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY OnTitleChanged)
     Q_PROPERTY(float progress READ GetProgress NOTIFY OnProgressChanged)
     Q_PROPERTY(uint8_t tasks_count READ GetTasksCount NOTIFY OnTasksCountChanged)
+    Q_PROPERTY(QVariantList taskList READ GetTaskList NOTIFY onTaskListChanged)
 
 public:
     Page();
@@ -25,7 +27,8 @@ public:
     float GetProgress() const noexcept;
     uint8_t GetTasksCount();
 
-    void AddTask(const uint8_t task_id, const QString title, std::function<void()> task);
+    QVariantList GetTaskList();
+    void AddTask(const uint8_t task_id, const QString title, const TaskItem::Task task);
     void RemoveTask(const uint8_t task_id);
     void ClearTasks();
 
@@ -36,13 +39,14 @@ signals:
     void OnTitleChanged();
     void OnProgressChanged();
     void OnTasksCountChanged();
+    void onTaskListChanged();
 
 private:
     uint32_t id_;// TODO(MN): Hold it unique. use builder
     QString title_;
     float progress_;
     uint8_t tasks_count_;
-    TaskContainer* task_container_;
+    TaskContainer task_container_;
 
     void SetProgress(const float& percent);
     void SetTasksCount(const uint8_t& count);

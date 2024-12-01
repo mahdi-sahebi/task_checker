@@ -83,40 +83,8 @@ Column
                 height: parent.height - 30
                 anchors.centerIn: parent
 
-                TaskContainer {
-                    id: task_container
-                }
-
-
-                Text {
-                    text: "Add"
-                    font.pointSize: 40
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            task_container.Add();
-                            text_count.text = task_container.GetCount();
-                        }
-                    }
-                }
-                Text {
-                    text: "Remove"
-                    font.pointSize: 40
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            task_container.Remove(0);
-                            text_count.text = task_container.GetCount();
-                        }
-                    }
-                }
-                Text {
-                    id: text_count
-                    text: "0"
-                    font.pointSize: 30
-                }
                 Repeater {
-                    model: task_container.list
+                    model: page.taskList
                     delegate: TaskItemWidget {
                         task_item: modelData
                     }

@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QString>
 #include <QVariantList>
+#include "page/page.h"
 
 class PageContainer : public QObject
 {
@@ -17,7 +18,7 @@ public:
     PageContainer& operator=(const PageContainer&) = delete;
     virtual ~PageContainer();
 
-    Q_INVOKABLE bool Add(const uint16_t id, const QString& title);
+    Q_INVOKABLE Page* Add(const uint16_t id, const QString& title);
     Q_INVOKABLE bool Remove(const uint16_t id);
     Q_INVOKABLE void Clear();
     QVariantList GetList();

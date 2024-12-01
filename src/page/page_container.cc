@@ -12,18 +12,18 @@ PageContainer::~PageContainer()
     Clear();
 }
 
-bool PageContainer::Add(const uint16_t id, const QString& title)
+Page* PageContainer::Add(const uint16_t id, const QString& title)
 {
     auto page = new Page();// TODO(MN): Use builder
-    if (nullptr == page) {
-        return false;
+
+    if (nullptr != page) {
+        page->SetID(id);
+        page->SetTitle(title);
+        list_.append(QVariant::fromValue(page));
+        emit OnListChanged();
     }
 
-    page->SetID(id);
-    page->SetTitle(title);
-    list_.append(QVariant::fromValue(page));
-    emit OnListChanged();
-    return true;
+    return page;
 }
 
 bool PageContainer::Remove(const uint16_t id)
