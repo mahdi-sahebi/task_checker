@@ -2,11 +2,14 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import "TaskItemWidget"
 import Task.Container 1.0
+import Page.Page 1.0
 
 Column
 {
     anchors.fill: parent
     anchors.centerIn: parent
+
+    property Page page
 
     Row
     {
@@ -24,7 +27,7 @@ Column
         }
         Text
         {
-            text: "Page Title"
+            text: page.title
             font.pointSize: 24
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter

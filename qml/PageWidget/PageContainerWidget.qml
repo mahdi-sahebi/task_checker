@@ -9,7 +9,7 @@ Rectangle {
     Repeater {
         model: page_container.list
         delegate: PageWidget {
-//            page: modelData
+            page: modelData
         }
     }
 }
