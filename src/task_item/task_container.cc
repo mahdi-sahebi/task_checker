@@ -16,8 +16,9 @@ void TaskContainer::Add(const uint8_t task_id, const QString title, const TaskIt
     TaskItem* const task_item = TaskItem::Build()
             ->SetTitle(title)
             ->SetTask(task);
+
     if (nullptr != task_item) {
-        // TODO(MN): Set task id
+        task_item->SetID(task_id);// TODO(MN): Keep it unique
         list_.append(QVariant::fromValue(task_item));
 
         emit OnListChanged();
