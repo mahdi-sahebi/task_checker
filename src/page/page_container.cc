@@ -14,11 +14,12 @@ PageContainer::~PageContainer()
 
 bool PageContainer::Add(const uint16_t id, const QString& title)
 {
-    auto page = new Page(id);// TODO(MN): Use builder
+    auto page = new Page();// TODO(MN): Use builder
     if (nullptr == page) {
         return false;
     }
 
+    page->SetID(id);
     page->SetTitle(title);
     list_.append(QVariant::fromValue(page));
     emit OnListChanged();

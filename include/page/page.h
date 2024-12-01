@@ -15,7 +15,7 @@ class Page : public QObject
     Q_PROPERTY(uint8_t tasks_count READ GetTasksCount NOTIFY OnTasksCountChanged)
 
 public:
-    Page(const uint32_t id);
+    Page();
     Page(const Page&) = delete;
     Page& operator=(const Page&) = delete;
     ~Page();
@@ -29,6 +29,7 @@ public:
     void RemoveTask(const uint8_t task_id);
     void ClearTasks();
 
+    void SetID(const uint32_t id) noexcept;
     Q_INVOKABLE uint32_t GetID() const noexcept;
 
 signals:
@@ -37,7 +38,7 @@ signals:
     void OnTasksCountChanged();
 
 private:
-    const uint32_t id_;// TODO(MN): Hold it unique
+    uint32_t id_;// TODO(MN): Hold it unique. use builder
     QString title_;
     float progress_;
     uint8_t tasks_count_;

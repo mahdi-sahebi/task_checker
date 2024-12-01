@@ -11,18 +11,14 @@ TaskContainer::~TaskContainer()
     Clear();
 }
 
-void TaskContainer::Add()
+void TaskContainer::Add(const uint8_t task_id, const QString title, const TaskItem::Task task)
 {
     TaskItem* const task_item = TaskItem::Build()
-            ->SetTitle("Example")
-            ->SetTask([]()
-        {
-            static bool result = 0;
-            result = !result;
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            return result;
-        });
+            ->SetTitle(title)
+            ->SetTask(task);
+
     if (nullptr != task_item) {
+        task_item->SetID(task_id);// TODO(MN): Keep it unique
         list_.append(QVariant::fromValue(task_item));
 
         emit OnListChanged();
@@ -38,22 +34,20 @@ void TaskContainer::Remove(const unsigned int index)
         }
 
         list_.removeAt(index);
-
         emit OnListChanged();
     }
 }
 
 void TaskContainer::Clear()
 {
-    // TOOD(MN): Iterate on list and delete the task objects
-    uint32_t index = list_.size();
+    uint32_t last_index = static_cast<uint32_t>(list_.size());
 
-    while (index--) {
-        Remove(index);
+    while (last_index--) {
+        Remove(last_index);
     }
 }
 
-Q_INVOKABLE int TaskContainer::GetCount()
+int TaskContainer::GetCount()
 {
     return list_.size();
 }

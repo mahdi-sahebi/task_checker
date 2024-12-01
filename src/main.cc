@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include "task_item/task_item.h"
 #include "task_item/task_container.h"
+#include "page/page.h"
 #include "page/page_container.h"
 
 int main(int argc, char *argv[])
@@ -10,8 +11,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
+    // TODO(MN): ELB namespace for all modules
     qmlRegisterType<TaskItem>("Task.Item", 1, 0, "TaskItem");
     qmlRegisterType<TaskContainer>("Task.Container", 1, 0, "TaskContainer");
+    qmlRegisterType<Page>("Page.Page", 1, 0, "Page");
 
     QQmlApplicationEngine engine;
     auto page_container = new PageContainer();

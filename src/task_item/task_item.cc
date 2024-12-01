@@ -7,7 +7,7 @@
 using namespace std;
 
 TaskItem::TaskItem(QObject* parent) :
-    is_enabled_{true}, task_{nullptr}
+    is_enabled_{true}, task_{nullptr}, id_{0}
 {
   (void)parent;
   SetState(State::kFail);
@@ -16,6 +16,16 @@ TaskItem::TaskItem(QObject* parent) :
 TaskItem::~TaskItem()
 {
 
+}
+
+void TaskItem::SetID(const uint32_t id)
+{
+    id_ = id;
+}
+
+uint32_t TaskItem::GetID()
+{
+    return id_;
 }
 
 TaskItem* TaskItem::Build()
