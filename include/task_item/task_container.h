@@ -6,6 +6,7 @@
 #include "task_item.h"
 
 
+// TODO(MN): Apply google naming convension
 class TaskContainer : public QObject
 {
     Q_OBJECT

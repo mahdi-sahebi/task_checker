@@ -2,23 +2,20 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import Task.Item 1.0
 
-Row
-{
+Row {
     width: parent.width
     height: 40
 
     property TaskItem task_item
 
-    Image
-    {
+    Image {
         id: button
         source: task_item.image_path
         width: 20
         height: 20
         anchors.verticalCenter: parent.verticalCenter
 
-        MouseArea
-        {
+        MouseArea {
             anchors.fill: parent
             enabled: task_item.is_enabled
 
@@ -28,8 +25,7 @@ Row
         }
     }
 
-    Text
-    {
+    Text {
         color: "#f0f0f0"
         text: task_item.title
         font.pointSize: 16

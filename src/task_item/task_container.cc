@@ -34,22 +34,20 @@ void TaskContainer::Remove(const unsigned int index)
         }
 
         list_.removeAt(index);
-
         emit OnListChanged();
     }
 }
 
 void TaskContainer::Clear()
 {
-    // TOOD(MN): Iterate on list and delete the task objects
-    uint32_t index = list_.size();
+    uint32_t last_index = static_cast<uint32_t>(list_.size());
 
-    while (index--) {
-        Remove(index);
+    while (last_index--) {
+        Remove(last_index);
     }
 }
 
-Q_INVOKABLE int TaskContainer::GetCount()
+int TaskContainer::GetCount()
 {
     return list_.size();
 }
