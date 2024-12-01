@@ -15,7 +15,7 @@ public:
     explicit TaskContainer(QObject* parent = nullptr);
     TaskContainer(const TaskContainer& other) = delete;
     ~TaskContainer();
-    Q_INVOKABLE void Add();
+    Q_INVOKABLE void Add(const uint8_t task_id, const QString title, const TaskItem::Task task);
     Q_INVOKABLE void Remove(const unsigned int index);
     Q_INVOKABLE void Clear();
     Q_INVOKABLE int GetCount();

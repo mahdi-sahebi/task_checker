@@ -11,18 +11,13 @@ TaskContainer::~TaskContainer()
     Clear();
 }
 
-void TaskContainer::Add()
+void TaskContainer::Add(const uint8_t task_id, const QString title, const TaskItem::Task task)
 {
     TaskItem* const task_item = TaskItem::Build()
-            ->SetTitle("Example")
-            ->SetTask([]()
-        {
-            static bool result = 0;
-            result = !result;
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            return result;
-        });
+            ->SetTitle(title)
+            ->SetTask(task);
     if (nullptr != task_item) {
+        // TODO(MN): Set task id
         list_.append(QVariant::fromValue(task_item));
 
         emit OnListChanged();
