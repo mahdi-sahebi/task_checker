@@ -1,7 +1,7 @@
 #include "page/page.h"
 
-Page::Page(const uint32_t id) :
-    id_{id},
+Page::Page() :
+    id_{0},
     title_{""},
     progress_{0.0F},
     tasks_count_{0},
@@ -63,6 +63,11 @@ void Page::RemoveTask(const uint8_t task_id)
 void Page::ClearTasks()
 {
     task_container_->Clear();
+}
+
+void Page::SetID(const uint32_t id) noexcept
+{
+    id_ = id;
 }
 
 uint32_t Page::GetID() const noexcept
