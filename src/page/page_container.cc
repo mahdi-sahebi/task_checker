@@ -33,7 +33,7 @@ bool PageContainer::Remove(const uint16_t id)
     for (uint32_t index = 0; index < size; index++) {
         const auto page = list_[index].value<Page*>();
 
-        if (page->GetID() == id) {
+        if (page->GetID() != id) {
             continue;
         }
 
