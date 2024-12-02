@@ -4,125 +4,113 @@ import "TaskItemWidget"
 import Task.Container 1.0
 import Page.Page 1.0
 
-Column
-{
-    anchors.fill: parent
-    anchors.centerIn: parent
-
+Rectangle {
     property Page page
 
-    Row
-    {
-        id: header
-        width: parent.width
-        height: 50
+    Column {
+        anchors.fill: parent
+        anchors.centerIn: parent
 
-        Text
-        {
-            text: "<"
-            font.pointSize: 24
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.verticalCenter: parent.verticalCenter
-        }
-        Text
-        {
-            text: page.title
-            font.pointSize: 24
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-        }
-        Text
-        {
-            text: ">"
-            font.pointSize: 24
-            anchors.right: parent.right
-            anchors.rightMargin: 20
-            anchors.verticalCenter: parent.verticalCenter
-        }
-    }
+        Row {
+            id: header
+            width: parent.width
+            height: 50
 
-
-    Row
-    {
-        width: parent.width
-        anchors.top: header.bottom
-        anchors.topMargin: 25
-        anchors.bottom: progress.top
-
-        Rectangle
-        {
-            color: "#464646"
-            width: parent.width - 4 - 4
-            height: parent.height - 4 - 4
-            anchors.centerIn: parent
-            radius: 10
-
-            Rectangle
-            {
-                color: "#464646"
-                width: 200
-                height: 30
+            Text {
+                text: "<"
+                font.pointSize: 24
+                anchors.left: parent.left
+                anchors.leftMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Text {
+                text: page.title
+                font.pointSize: 24
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                anchors.topMargin: -15
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Text {
+                text: ">"
+                font.pointSize: 24
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+
+
+        Row {
+            width: parent.width
+            anchors.top: header.bottom
+            anchors.topMargin: 25
+            anchors.bottom: progress.top
+
+            Rectangle {
+                color: "#464646"
+                width: parent.width - 4 - 4
+                height: parent.height - 4 - 4
+                anchors.centerIn: parent
                 radius: 10
 
-                Text
-                {
-                    text: "Commands"
-                    color: "#f0f0f0"
-                    font.pointSize: 22
+                Rectangle {
+                    color: "#464646"
+                    width: 200
+                    height: 30
                     anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -15
+                    radius: 10
+
+                    Text {
+                        text: "Commands"
+                        color: "#f0f0f0"
+                        font.pointSize: 22
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
-            }
 
-            Column
-            {
-                width: parent.width - 30
-                height: parent.height - 30
-                anchors.centerIn: parent
+                Column {
+                    width: parent.width - 30
+                    height: parent.height - 30
+                    anchors.centerIn: parent
 
-                Repeater {
-                    model: page.taskList
-                    delegate: TaskItemWidget {
-                        task_item: modelData
+                    Repeater {
+                        model: page.taskList
+                        delegate: TaskItemWidget {
+                            task_item: modelData
+                        }
                     }
                 }
             }
         }
-    }
 
-    Row
-    {
-        id: progress
-        width: parent.width
-        height: 40
-        anchors.bottom: footer.top
+        Row {
+            id: progress
+            width: parent.width
+            height: 40
+            anchors.bottom: footer.top
 
-        Rectangle
-        {
-            color: "#ff8000"
-            width: 500
-            height: 20
-            anchors.centerIn: parent
+            Rectangle {
+                color: "#ff8000"
+                width: 500
+                height: 20
+                anchors.centerIn: parent
+            }
         }
-    }
 
-    Row
-    {
-        id: footer
-        width: parent.width
-        height: 30
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 4
+        Row {
+            id: footer
+            width: parent.width
+            height: 30
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 4
 
-        Text
-        {
-            color: "#ff8000"
-            text: "X/X"
-            font.pointSize: 16
-            anchors.centerIn: parent
+            Text {
+                color: "#ff8000"
+                text: "X/X"
+                font.pointSize: 16
+                anchors.centerIn: parent
+            }
         }
     }
 }
