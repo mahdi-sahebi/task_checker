@@ -1,5 +1,5 @@
-set(HEADERS )
-set(SOURCES main.cc ${PROJECT_SOURCE_DIR}/qml/qml.qrc)
+set(HEADERS )# TODO(MN): Set headers
+set(SOURCES main.cc ${PROJECT_SOURCE_DIR}/qml/qml.qrc application/application.cc)
 set(APP ${PROJECT_NAME})
 
 set(CMAKE_AUTOUIC ON)
