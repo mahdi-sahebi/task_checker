@@ -30,8 +30,9 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
+
+
     auto page = page_container->Add(0, "Page 1");
-    page->SetTitle("kkk");
     page->ClearTasks();
     page->AddTask(100, "Task description 100", []() {
         static bool f = false;
@@ -53,6 +54,23 @@ int main(int argc, char *argv[])
         f = !f;
         return f;
     });
+
+
+
+
+    auto page2 = page_container->Add(1, "Page 2");
+    page2->ClearTasks();
+    page2->AddTask(200, "Task description 200", []() {
+        static bool f = false;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        f = !f;
+        return f;
+    });
+
+
+
+    auto page3 = page_container->Add(3, "Page 3");
+
 
     return app.exec();
 }
