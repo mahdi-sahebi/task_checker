@@ -26,10 +26,16 @@ void AppInitiator::defineDataTypes()
 void AppInitiator::defineGlobals(QQmlApplicationEngine& engine)
 {
     engine.rootContext()->setContextProperty("page_container", &page_container_);
-
 }
 
 void AppInitiator::initialize()
+{
+    createPage1();
+    createPage2();
+    createPage3();
+}
+
+void AppInitiator::createPage1()
 {
     auto page_1 = page_container_.Add(0, "Page 1");
     page_1->ClearTasks();
@@ -41,9 +47,9 @@ void AppInitiator::initialize()
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         },
         []() {
-            static bool f = false;
-            f = !f;
-            return f;
+            static bool result = false;
+            result = !result;
+            return result;
         });
 
     page_1->AddTask(
@@ -53,9 +59,9 @@ void AppInitiator::initialize()
             std::this_thread::sleep_for(std::chrono::milliseconds(5000));
         },
         []() {
-            static bool f = false;
-            f = !f;
-            return f;
+            static bool result = false;
+            result = !result;
+            return result;
         });
 
     page_1->AddTask(
@@ -65,13 +71,14 @@ void AppInitiator::initialize()
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         },
         []() {
-            static bool f = false;
-            f = !f;
-            return f;
+            static bool result = false;
+            result = !result;
+            return result;
         });
+}
 
-
-
+void AppInitiator::createPage2()
+{
     auto page_2 = page_container_.Add(1, "Page 2");
     page_2->ClearTasks();
 
@@ -82,14 +89,16 @@ void AppInitiator::initialize()
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         },
         []() {
-            static bool f = false;
-            f = !f;
-            return f;
+            static bool result = false;
+            result = !result;
+            return result;
         });
+}
 
-
+void AppInitiator::createPage3()
+{
     auto page_3 = page_container_.Add(3, "Page 3");
     (void)page_3;
 
-    page_container_.Remove(1);
+    page_container_.Remove(1);// TODO(MN): Get page id, instead of index
 }
