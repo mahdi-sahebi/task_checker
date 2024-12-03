@@ -28,7 +28,10 @@ public:
     uint8_t GetTasksCount();
 
     QVariantList GetTaskList();
-    void AddTask(const uint8_t task_id, const QString title, const TaskItem::Task task);
+    void AddTask(const uint8_t task_id,
+                 const QString title,
+                 const TaskItem::Task task,
+                 const TaskItem::Checker checker);
     void RemoveTask(const uint8_t task_id);
     void ClearTasks();
 

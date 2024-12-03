@@ -7,7 +7,7 @@
 using namespace std;
 
 TaskItem::TaskItem(QObject* parent) :
-    is_enabled_{true}, task_{nullptr}, id_{0}
+    is_enabled_{true}, task_{nullptr}, checker_{nullptr}, id_{0}
 {
   (void)parent;
   SetState(State::kFail);
@@ -47,17 +47,26 @@ TaskItem* TaskItem::SetTitle(const QString& title)
 
 void TaskItem::Check()
 {
-    if (nullptr == task_) {
-        qDebug() << "[TaskItem] Callback hasn't been set";
-        return;
-    }
-
     SetEnable(false);
     SetState(State::kWait);
 
     std::thread([this](){
         // TODO(MN): Handle timeout
-        const State state = task_() ? State::kDone : State::kFail;
+        const State state = checker_() ? State::kDone : State::kFail;
+        SetState(state);
+        SetEnable(true);
+    }).detach();
+}
+
+void TaskItem::Run()
+{
+    SetEnable(false);
+    SetState(State::kWait);
+
+    std::thread([this](){
+        // TODO(MN): Handle timeout
+        task_();
+        const State state = checker_() ? State::kDone : State::kFail;
         SetState(state);
         SetEnable(true);
     }).detach();
@@ -98,8 +107,14 @@ TaskItem* TaskItem::SetEnable(const bool enable)
     return this;
 }
 
-TaskItem* TaskItem::SetTask(const Task task)
+TaskItem* TaskItem::SetTask(const Task task, const Checker checker)
 {
+    if ((nullptr == task) || (nullptr == checker)){
+        qDebug() << "[TaskItem] Task callback hasn't been set";
+        return nullptr;
+    }
+
     task_ = task;
+    checker_ = checker;
     return this;
 }

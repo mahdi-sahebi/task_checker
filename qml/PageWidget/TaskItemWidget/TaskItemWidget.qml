@@ -20,7 +20,7 @@ Row {
             enabled: task_item.is_enabled
 
             onClicked: {
-                task_item.Check();
+                task_item.Run();
             }
         }
     }

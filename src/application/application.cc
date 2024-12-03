@@ -31,42 +31,65 @@ void AppInitiator::defineGlobals(QQmlApplicationEngine& engine)
 
 void AppInitiator::initialize()
 {
-    auto page = page_container_.Add(0, "Page 1");
-    page->ClearTasks();
-    page->AddTask(100, "Task description 100", []() {
-        static bool f = false;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        f = !f;
-        return f;
-    });
+    auto page_1 = page_container_.Add(0, "Page 1");
+    page_1->ClearTasks();
 
-    page->AddTask(101, "Task description 101", []() {
-        static bool f = false;
-        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-        f = !f;
-        return f;
-    });
+    page_1->AddTask(
+        100,
+        "Task description 100",
+        []() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        },
+        []() {
+            static bool f = false;
+            f = !f;
+            return f;
+        });
 
-    page->AddTask(102, "Task description 102", []() {
-        static bool f = false;
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        f = !f;
-        return f;
-    });
+    page_1->AddTask(
+        101,
+        "Task description 101",
+        []() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+        },
+        []() {
+            static bool f = false;
+            f = !f;
+            return f;
+        });
+
+    page_1->AddTask(
+        102,
+        "Task description 102",
+        []() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        },
+        []() {
+            static bool f = false;
+            f = !f;
+            return f;
+        });
 
 
-    auto page2 = page_container_.Add(1, "Page 2");
-    page2->ClearTasks();
-    page2->AddTask(200, "Task description 200", []() {
-        static bool f = false;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        f = !f;
-        return f;
-    });
+
+    auto page_2 = page_container_.Add(1, "Page 2");
+    page_2->ClearTasks();
+
+    page_2->AddTask(
+        200,
+        "Task description 200",
+        []() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        },
+        []() {
+            static bool f = false;
+            f = !f;
+            return f;
+        });
 
 
-    auto page3 = page_container_.Add(3, "Page 3");
-
+    auto page_3 = page_container_.Add(3, "Page 3");
+    (void)page_3;
 
     page_container_.Remove(1);
 }
