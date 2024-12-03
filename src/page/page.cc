@@ -53,12 +53,16 @@ QVariantList Page::GetTaskList()
     return task_container_.GetList();
 }
 
-void Page::AddTask(const uint8_t task_id, const QString title, const TaskItem::Task task)
+void Page::AddTask(
+        const uint8_t task_id,
+        const QString title,
+        const TaskItem::Task task,
+        const TaskItem::Checker checker)
 {
     QObject::connect(&task_container_, &TaskContainer::OnListChanged, this, &Page::onTaskListChanged);
     // TODO(MN): Connect arguments
     // TODO(MN): Use base interface
-    task_container_.Add(task_id, title, task);
+    task_container_.Add(task_id, title, task, checker);
 }
 
 void Page::RemoveTask(const uint8_t task_id)

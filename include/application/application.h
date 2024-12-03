@@ -18,6 +18,9 @@ private:
     void defineDataTypes() override;
     void defineGlobals(QQmlApplicationEngine& engine) override;
     void initialize() override;
+    void createPage1();
+    void createPage2();
+    void createPage3();
 };
 
 

@@ -24,7 +24,8 @@ public:
     kDone
   };
 
-  using Task = std::function<bool()>;
+  using Checker = std::function<bool()>;
+  using Task = std::function<void()>;
 
   explicit TaskItem(QObject* parent = nullptr);
   TaskItem(const TaskItem& other) = delete;
@@ -40,8 +41,9 @@ public:
   void SetImagePath(const QString& image_path);
   bool IsEnabled();
   TaskItem* SetEnable(const bool enable);
-  TaskItem* SetTask(const Task task);
+  TaskItem* SetTask(const Task task, const Checker checker);
   Q_INVOKABLE void Check();
+  Q_INVOKABLE void Run();
 
 signals:
   void OnTitleChanged();
@@ -55,6 +57,7 @@ private:
   QString title_;
   QString image_path_;
   Task task_;
+  Checker checker_;
 
   void SetState(const State state);
 };

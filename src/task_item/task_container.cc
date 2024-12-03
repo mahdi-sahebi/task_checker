@@ -11,11 +11,15 @@ TaskContainer::~TaskContainer()
     Clear();
 }
 
-void TaskContainer::Add(const uint8_t task_id, const QString title, const TaskItem::Task task)
+void TaskContainer::Add(
+        const uint8_t task_id,
+        const QString title,
+        const TaskItem::Task task,
+        const TaskItem::Checker checker)
 {
     TaskItem* const task_item = TaskItem::Build()
             ->SetTitle(title)
-            ->SetTask(task);
+            ->SetTask(task, checker);
 
     if (nullptr != task_item) {
         task_item->SetID(task_id);// TODO(MN): Keep it unique
