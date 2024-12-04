@@ -4,6 +4,7 @@ import "TaskItemWidget"
 import Task.Container 1.0
 import Page.Page 1.0
 
+
 Rectangle {
     property Page page
 
@@ -47,7 +48,7 @@ Rectangle {
 
             Rectangle {
                 color: "#464646"
-                width: parent.width - 4 - 4
+                width: parent.width - 4 - 4// TODO(MN): Use margin
                 height: parent.height - 4 - 4
                 anchors.centerIn: parent
                 radius: 10
@@ -84,19 +85,39 @@ Rectangle {
             }
         }
 
-        Row {
+
+
+
+
+        //////////////////////
+        // TODO(MN): Progress bar
+        Item {
             id: progress
-            width: parent.width
-            height: 40
+            width: parent.width - 4 - 4
+            height: 20
             anchors.bottom: footer.top
+            anchors.horizontalCenter: parent.horizontalCenter
 
             Rectangle {
+                color: "#565656"
+                anchors.fill: parent
+                radius: 5
+            }
+            Rectangle {
                 color: "#ff8000"
-                width: 500
-                height: 20
+                width: 300
+                height: parent.height
+                radius: 5
+            }
+            Text {
+                text: "41%"
                 anchors.centerIn: parent
+                font.pointSize: 16
+                color: "#ffffff"
             }
         }
+
+
 
         Row {
             id: footer
@@ -112,5 +133,6 @@ Rectangle {
                 anchors.centerIn: parent
             }
         }
+
     }
 }
