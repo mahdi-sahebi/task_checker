@@ -3,10 +3,10 @@ import QtQuick.Window 2.2
 import Task.Item 1.0
 
 Row {
+    property TaskItem task_item: nuull
+
     width: parent.width
     height: 40
-
-    property TaskItem task_item
 
     Image {
         id: button
@@ -25,6 +25,29 @@ Row {
         }
     }
 
+    RotationAnimation {
+        id: rotation
+        target: button
+        property: "rotation"
+        duration: 1000
+        from: 0
+        to: 360
+        loops: Animation.Infinite
+        running: !task_item.is_enabled
+
+        onStopped: {
+            button.rotation = 0;
+        }
+    }
+
+    Connections {
+        target: task_item
+
+        onEnableChanged: {
+            console.log("f");
+        }
+    }
+
     Text {
         color: "#f0f0f0"
         text: task_item.title
@@ -32,5 +55,6 @@ Row {
         anchors.left: parent.left
         anchors.leftMargin: 30
         anchors.verticalCenter: parent.verticalCenter
+        opacity: task_item.is_enabled ? 1 : 0.5
     }
 }

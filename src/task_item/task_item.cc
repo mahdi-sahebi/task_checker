@@ -103,7 +103,7 @@ bool TaskItem::IsEnabled()
 TaskItem* TaskItem::SetEnable(const bool enable)
 {
     is_enabled_ = enable;
-    emit OnEnableChanged();
+    emit onEnableChanged();
     return this;
 }
 
