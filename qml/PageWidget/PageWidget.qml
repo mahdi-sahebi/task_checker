@@ -7,55 +7,29 @@ import Page.Page 1.0
 
 Rectangle {
     property Page page
+    color: "#f0f0f0"
 
     Column {
         anchors.fill: parent
         anchors.centerIn: parent
 
         Row {
-            id: header
+            id: tasks
             width: parent.width
-            height: 50
-
-            Text {
-                text: "<"
-                font.pointSize: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 20
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            Text {
-                text: page.title
-                font.pointSize: 24
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            Text {
-                text: ">"
-                font.pointSize: 24
-                anchors.right: parent.right
-                anchors.rightMargin: 20
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-
-
-        Row {
-            width: parent.width
-            anchors.top: header.bottom
-            anchors.topMargin: 25
-            anchors.bottom: progress.top
+            anchors.top: parent.top
+            anchors.bottom: progress_bar.top
+            anchors.bottomMargin: 5
 
             Rectangle {
                 color: "#464646"
-                width: parent.width - 4 - 4// TODO(MN): Use margin
-                height: parent.height - 4 - 4
+                width: parent.width
+                height: parent.height
                 anchors.centerIn: parent
                 radius: 10
 
                 Rectangle {
                     color: "#464646"
-                    width: 200
+                    width: 250
                     height: 30
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
@@ -63,9 +37,10 @@ Rectangle {
                     radius: 10
 
                     Text {
-                        text: "Commands"
+                        text: page.title
                         color: "#f0f0f0"
-                        font.pointSize: 22
+                        font.pointSize: 20
+                        font.bold: true
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
@@ -86,16 +61,13 @@ Rectangle {
         }
 
 
-
-
-
-        //////////////////////
-        // TODO(MN): Progress bar
         Item {
-            id: progress
-            width: parent.width - 4 - 4
+            id: progress_bar
+            property real percent: 0.78
+
+            width: parent.width
             height: 20
-            anchors.bottom: footer.top
+            anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
 
             Rectangle {
@@ -105,32 +77,15 @@ Rectangle {
             }
             Rectangle {
                 color: "#ff8000"
-                width: 300
+                width: (parent.width * progress_bar.percent)
                 height: parent.height
                 radius: 5
             }
             Text {
-                text: "41%"
+                text: (progress_bar.percent * 100) + "%"
                 anchors.centerIn: parent
                 font.pointSize: 16
                 color: "#ffffff"
-            }
-        }
-
-
-
-        Row {
-            id: footer
-            width: parent.width
-            height: 30
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 4
-
-            Text {
-                color: "#ff8000"
-                text: "X/X"
-                font.pointSize: 16
-                anchors.centerIn: parent
             }
         }
 
