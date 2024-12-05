@@ -57,34 +57,14 @@ Rectangle {
             }
         }
 
-
-        Item {
+        ProgressBar {
             id: progress_bar
-            property real percent: 0.78
-
             width: parent.width * 0.8
             height: 20
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottomMargin: 5
-
-            Rectangle {
-                color: "#666666"
-                anchors.fill: parent
-                radius: 5
-            }
-            Rectangle {
-                color: "#ff8000"
-                width: (parent.width * progress_bar.percent)
-                height: parent.height
-                radius: 5
-            }
-            Text {
-                text: (progress_bar.percent * 100) + "%"
-                anchors.centerIn: parent
-                font.pointSize: 16
-                color: "#ffffff"
-            }
+            percent: 0.97
         }
 
     }

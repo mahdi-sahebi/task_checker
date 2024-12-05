@@ -7,5 +7,6 @@
         <file>PageWidget/TaskItemWidget/TaskItemWidget.qml</file>
         <file>PageWidget/PageWidget.qml</file>
         <file>PageWidget/PageContainerWidget.qml</file>
+        <file>PageWidget/ProgressBar.qml</file>
     </qresource>
 </RCC>
