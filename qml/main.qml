@@ -22,19 +22,27 @@ Window
             height: 40
             width: parent.width
 
-            Text {
+            Button {
                 text: "<"
                 font.pointSize: 24
                 anchors.left: parent.left
                 anchors.leftMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
+
+                onClicked : {
+                    console.log("hi");
+                }
             }
-            Text {
+            Button {
                 text: ">"
                 font.pointSize: 24
                 anchors.right: parent.right
                 anchors.rightMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
+
+                onClicked: {
+
+                }
             }
         }
 
@@ -43,8 +51,6 @@ Window
             anchors.top: header.bottom
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-
-
         }
     }
 }
