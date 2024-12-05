@@ -15,10 +15,7 @@ Rectangle {
 
         Row {
             id: tasks
-            width: parent.width
-            anchors.top: parent.top
-            anchors.bottom: progress_bar.top
-            anchors.bottomMargin: 5
+            anchors.fill: parent
 
             Rectangle {
                 color: "#464646"
@@ -65,13 +62,14 @@ Rectangle {
             id: progress_bar
             property real percent: 0.78
 
-            width: parent.width
+            width: parent.width * 0.8
             height: 20
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 5
 
             Rectangle {
-                color: "#565656"
+                color: "#666666"
                 anchors.fill: parent
                 radius: 5
             }
