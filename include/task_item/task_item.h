@@ -14,7 +14,7 @@ class TaskItem : public QObject
     Q_OBJECT
     Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY OnTitleChanged)
     Q_PROPERTY(QString image_path READ GetImagePath WRITE SetImagePath NOTIFY OnImagePathChanged)
-    Q_PROPERTY(bool is_enabled READ IsEnabled() WRITE SetEnable NOTIFY OnEnableChanged)
+    Q_PROPERTY(bool is_enabled READ IsEnabled() WRITE SetEnable NOTIFY onEnableChanged)
 
 public:
   enum class State
@@ -48,7 +48,7 @@ public:
 signals:
   void OnTitleChanged();
   void OnImagePathChanged();
-  void OnEnableChanged();
+  void onEnableChanged();
   void OnIDChanged();
 
 private:

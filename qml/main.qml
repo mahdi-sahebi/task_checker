@@ -12,6 +12,51 @@ Window
     color: "#f0f0f0"
     // TODO(MN): Manage resizing
 
-    PageContainerWidget {
+    Row {
+        anchors.fill: parent
+        anchors.margins: 5
+        spacing: 10
+
+        Column {
+            id: header
+            height: 40
+            width: parent.width
+
+            Button {
+                width: 40
+                height: 40
+                text: "<"
+                font.pointSize: 24
+                anchors.left: parent.left
+                anchors.leftMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
+
+                onClicked : {
+                    page_list.gotoPreviousPage();
+                }
+            }
+            Button {
+                width: 40
+                height: 40
+                text: ">"
+                font.pointSize: 24
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
+
+                onClicked: {
+                    page_list.gotoNextPage();
+                }
+            }
+        }
+
+        PageContainerWidget {
+            id: page_list
+            width: parent.width
+            anchors.topMargin: 10
+            anchors.top: header.bottom
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
     }
 }

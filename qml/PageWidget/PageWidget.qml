@@ -4,57 +4,29 @@ import "TaskItemWidget"
 import Task.Container 1.0
 import Page.Page 1.0
 
+
 Rectangle {
     property Page page
+    color: "#f0f0f0"
 
     Column {
         anchors.fill: parent
         anchors.centerIn: parent
 
         Row {
-            id: header
-            width: parent.width
-            height: 50
-
-            Text {
-                text: "<"
-                font.pointSize: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 20
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            Text {
-                text: page.title
-                font.pointSize: 24
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            Text {
-                text: ">"
-                font.pointSize: 24
-                anchors.right: parent.right
-                anchors.rightMargin: 20
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-
-
-        Row {
-            width: parent.width
-            anchors.top: header.bottom
-            anchors.topMargin: 25
-            anchors.bottom: progress.top
+            id: tasks
+            anchors.fill: parent
 
             Rectangle {
                 color: "#464646"
-                width: parent.width - 4 - 4
-                height: parent.height - 4 - 4
+                width: parent.width
+                height: parent.height
                 anchors.centerIn: parent
                 radius: 10
 
                 Rectangle {
                     color: "#464646"
-                    width: 200
+                    width: 250
                     height: 30
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
@@ -62,9 +34,10 @@ Rectangle {
                     radius: 10
 
                     Text {
-                        text: "Commands"
+                        text: page.title
                         color: "#f0f0f0"
-                        font.pointSize: 22
+                        font.pointSize: 20
+                        font.bold: true
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
@@ -84,33 +57,15 @@ Rectangle {
             }
         }
 
-        Row {
-            id: progress
-            width: parent.width
-            height: 40
-            anchors.bottom: footer.top
-
-            Rectangle {
-                color: "#ff8000"
-                width: 500
-                height: 20
-                anchors.centerIn: parent
-            }
-        }
-
-        Row {
-            id: footer
-            width: parent.width
-            height: 30
+        ProgressBar {
+            id: progress_bar
+            width: parent.width * 0.8
+            height: 20
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 4
-
-            Text {
-                color: "#ff8000"
-                text: "X/X"
-                font.pointSize: 16
-                anchors.centerIn: parent
-            }
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 5
+            percent: 0.97
         }
+
     }
 }

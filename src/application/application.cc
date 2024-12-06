@@ -100,5 +100,5 @@ void AppInitiator::createPage3()
     auto page_3 = page_container_.Add(3, "Page 3");
     (void)page_3;
 
-    page_container_.Remove(1);// TODO(MN): Get page id, instead of index
+//    page_container_.Remove(1);// TODO(MN): Get page id, instead of index
 }
