@@ -23,6 +23,8 @@ Window
             width: parent.width
 
             Button {
+                width: 40
+                height: 40
                 text: "<"
                 font.pointSize: 24
                 anchors.left: parent.left
@@ -30,10 +32,12 @@ Window
                 anchors.verticalCenter: parent.verticalCenter
 
                 onClicked : {
-                    console.log("hi");
+                    page_list.gotoPreviousPage();
                 }
             }
             Button {
+                width: 40
+                height: 40
                 text: ">"
                 font.pointSize: 24
                 anchors.right: parent.right
@@ -41,13 +45,15 @@ Window
                 anchors.verticalCenter: parent.verticalCenter
 
                 onClicked: {
-
+                    page_list.gotoNextPage();
                 }
             }
         }
 
         PageContainerWidget {
+            id: page_list
             width: parent.width
+            anchors.topMargin: 10
             anchors.top: header.bottom
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter

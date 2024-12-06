@@ -5,6 +5,20 @@ import QtQuick.Controls 2.12
 Rectangle {
     color: "#f0f0f0"
 
+    function gotoNextPage()
+    {
+        if (swipe.currentIndex < (swipe.count - 1)) {
+            swipe.currentIndex++;
+        }
+    }
+
+    function gotoPreviousPage()
+    {
+        if (swipe.currentIndex > 0) {
+            swipe.currentIndex--;
+        }
+    }
+
     SwipeView {
         id: swipe
         anchors.fill: parent
