@@ -4,9 +4,7 @@ Page::Page() :
     id_{0},
     title_{""},
     progress_{0.0F},
-    tasks_count_{0}//,
-//    task_container_{nullptr}
-{
+    tasks_count_{0}{
 
 }
 
@@ -28,7 +26,7 @@ void Page::SetTitle(const QString& title)
 
 float Page::GetProgress() const noexcept
 {
-    return 0.0F;
+    return 0.11F;
 }
 
 void Page::SetProgress(const float& percent)
@@ -37,15 +35,9 @@ void Page::SetProgress(const float& percent)
     emit OnProgressChanged();
 }
 
-uint8_t Page::GetTasksCount()
+unsigned int Page::GetTasksCount()
 {
     return tasks_count_;
-}
-
-void Page::SetTasksCount(const uint8_t& count)
-{
-    tasks_count_ = count;
-    emit OnTasksCountChanged();
 }
 
 QVariantList Page::GetTaskList()
@@ -76,12 +68,12 @@ void Page::ClearTasks()
     task_container_.Clear();
 }
 
-void Page::SetID(const uint32_t id) noexcept
+void Page::SetID(const unsigned int id) noexcept
 {
     id_ = id;
 }
 
-uint32_t Page::GetID() const noexcept
+unsigned int Page::GetID() const noexcept
 {
     return id_;
 }

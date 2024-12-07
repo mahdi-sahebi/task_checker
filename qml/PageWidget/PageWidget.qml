@@ -64,7 +64,7 @@ Rectangle {
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottomMargin: 5
-            percent: 0.97
+            percent: page.progress
         }
 
     }

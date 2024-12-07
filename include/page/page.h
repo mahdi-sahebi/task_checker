@@ -13,7 +13,7 @@ class Page : public QObject
     Q_OBJECT
     Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY OnTitleChanged)
     Q_PROPERTY(float progress READ GetProgress NOTIFY OnProgressChanged)
-    Q_PROPERTY(uint8_t tasks_count READ GetTasksCount NOTIFY OnTasksCountChanged)
+    Q_PROPERTY(unsigned int tasks_count READ GetTasksCount NOTIFY OnTasksCountChanged)
     Q_PROPERTY(QVariantList taskList READ GetTaskList NOTIFY onTaskListChanged)
 
 public:
@@ -25,7 +25,7 @@ public:
     QString GetTitle() const noexcept;
     void SetTitle(const QString& title);
     float GetProgress() const noexcept;
-    uint8_t GetTasksCount();
+    unsigned int GetTasksCount();
 
     QVariantList GetTaskList();
     void AddTask(const uint8_t task_id,
@@ -35,8 +35,8 @@ public:
     void RemoveTask(const uint8_t task_id);
     void ClearTasks();
 
-    void SetID(const uint32_t id) noexcept;
-    Q_INVOKABLE uint32_t GetID() const noexcept;
+    void SetID(const unsigned int id) noexcept;
+    Q_INVOKABLE unsigned int GetID() const noexcept;
 
 signals:
     void OnTitleChanged();
@@ -52,8 +52,6 @@ private:
     TaskContainer task_container_;
 
     void SetProgress(const float& percent);
-    void SetTasksCount(const uint8_t& count);
-
 };
 
 

@@ -16,7 +16,7 @@ Item {
         radius: 5
     }
     Text {
-        text: (progress_bar.percent * 100) + "%"
+        text: Math.round(progress_bar.percent * 100) + "%"
         anchors.centerIn: parent
         font.pointSize: 16
         color: "#ffffff"
