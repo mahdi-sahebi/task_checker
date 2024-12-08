@@ -25,6 +25,7 @@ public:
     Q_INVOKABLE int GetCount();
     QVariantList GetList();
     void SetList(const QVariantList& list);// TODO(MN): Private
+    void CheckAllTasks() const noexcept;
 
 signals:
     void OnListChanged();

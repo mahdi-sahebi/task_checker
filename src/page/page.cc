@@ -77,3 +77,8 @@ unsigned int Page::GetID() const noexcept
 {
     return id_;
 }
+
+void Page::CheckAllTasks() const noexcept
+{
+    task_container_.CheckAllTasks();
+}

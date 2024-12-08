@@ -37,6 +37,7 @@ public:
 
     void SetID(const unsigned int id) noexcept;
     Q_INVOKABLE unsigned int GetID() const noexcept;
+    Q_INVOKABLE void CheckAllTasks() const noexcept;
 
 signals:
     void OnTitleChanged();

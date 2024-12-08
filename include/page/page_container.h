@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE Page* Add(const uint16_t id, const QString& title);
     Q_INVOKABLE bool Remove(const uint16_t id);
     Q_INVOKABLE void Clear();
+
     QVariantList GetList();
 
 signals:

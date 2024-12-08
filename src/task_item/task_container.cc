@@ -68,3 +68,18 @@ void TaskContainer::SetList(const QVariantList& list)
         emit OnListChanged();
     }
 }
+
+void TaskContainer::CheckAllTasks() const noexcept
+{
+    uint32_t last_index = static_cast<uint32_t>(list_.size());
+
+    while (last_index--) {
+        TaskItem* const task = list_[last_index].value<TaskItem*>();
+        if (nullptr == task) {
+            continue;
+        }
+
+        task->Check();
+    }
+}
+
