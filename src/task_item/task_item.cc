@@ -47,6 +47,7 @@ TaskItem* TaskItem::SetTitle(const QString& title)
 
 void TaskItem::Check()
 {
+    // TODO(MN): Thread safe(Not only for ui button)
     SetEnable(false);
     SetState(State::kWait);
 

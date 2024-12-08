@@ -44,7 +44,6 @@ Row {
         target: task_item
 
         onEnableChanged: {
-            console.log("f");
         }
     }
 

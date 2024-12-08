@@ -40,40 +40,40 @@ void AppInitiator::createPage1()
     auto page_1 = page_container_.Add(0, "Page 1");
     page_1->ClearTasks();
 
+    static bool result_1 = false;
     page_1->AddTask(
         100,
         "Task description 100",
         []() {
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            result_1 = !result_1;
         },
         []() {
-            static bool result = false;
-            result = !result;
-            return result;
+            return result_1;
         });
 
+    static bool result_2 = false;
     page_1->AddTask(
         101,
         "Task description 101",
         []() {
             std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+            result_2 = !result_2;
         },
         []() {
-            static bool result = false;
-            result = !result;
-            return result;
+            return result_2;
         });
 
+    static bool result_3 = false;
     page_1->AddTask(
         102,
         "Task description 102",
         []() {
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            result_3 = !result_3;
         },
         []() {
-            static bool result = false;
-            result = !result;
-            return result;
+            return result_3;
         });
 }
 
@@ -82,16 +82,16 @@ void AppInitiator::createPage2()
     auto page_2 = page_container_.Add(1, "Page 2");
     page_2->ClearTasks();
 
+    static bool result_1 = false;
     page_2->AddTask(
         200,
         "Task description 200",
         []() {
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            result_1 = !result_1;
         },
         []() {
-            static bool result = false;
-            result = !result;
-            return result;
+            return result_1;
         });
 }
 

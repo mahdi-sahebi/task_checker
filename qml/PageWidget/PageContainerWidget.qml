@@ -36,6 +36,10 @@ Rectangle {
                 page: modelData
             }
         }/* Repeater */
+
+        onCurrentIndexChanged:  {
+            page_container.list[currentIndex].CheckAllTasks();
+        }
     }/* SwipeView */
 }
 

@@ -66,6 +66,5 @@ Rectangle {
             anchors.bottomMargin: 5
             percent: page.progress
         }
-
     }
 }
