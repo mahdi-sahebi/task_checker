@@ -1,5 +1,6 @@
 #include <thread>
 #include <chrono>
+//#include <QMetaType>
 #include "application/application.h"
 
 
@@ -17,6 +18,7 @@ AppInitiator::~AppInitiator()
 void AppInitiator::defineDataTypes()
 {
     // TODO(MN): ELB namespace for all modules
+//    qRegisterMetaType<TaskItem::ID>();
     qmlRegisterType<TaskItem>("Task.Item", 1, 0, "TaskItem");
     qmlRegisterType<TaskContainer>("Task.Container", 1, 0, "TaskContainer");
     qmlRegisterType<Page>("Page.Page", 1, 0, "Page");

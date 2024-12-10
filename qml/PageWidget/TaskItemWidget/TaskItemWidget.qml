@@ -3,7 +3,7 @@ import QtQuick.Window 2.2
 import Task.Item 1.0
 
 Row {
-    property TaskItem task_item: nuull
+    property TaskItem task_item: null
 
     width: parent.width
     height: 40

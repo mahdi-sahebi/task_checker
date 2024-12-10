@@ -4,8 +4,9 @@ Page::Page() :
     id_{0},
     title_{""},
     progress_{0.0F},
-    tasks_count_{0}{
-
+    tasks_count_{0}
+{
+    QObject::connect(&task_container_, &TaskContainer::progressPercentChanged, this, &Page::onProgressChanged);
 }
 
 Page::~Page()
@@ -22,17 +23,6 @@ void Page::SetTitle(const QString& title)
 {
     title_ = title;
     emit OnTitleChanged();
-}
-
-float Page::GetProgress() const noexcept
-{
-    return 0.11F;
-}
-
-void Page::SetProgress(const float& percent)
-{
-    progress_ = percent;
-    emit OnProgressChanged();
 }
 
 unsigned int Page::GetTasksCount()
@@ -57,6 +47,8 @@ void Page::AddTask(
     task_container_.Add(task_id, title, task, checker);
 }
 
+// TODO(MN): Remove the duplicate interface connection APIs like this.
+// Use a get task container and call direct in QML file
 void Page::RemoveTask(const uint8_t task_id)
 {
     // TODO(MN): Use correct concept of task id instead of index
@@ -80,5 +72,15 @@ unsigned int Page::GetID() const noexcept
 
 void Page::CheckAllTasks() const noexcept
 {
-    task_container_.CheckAllTasks();
+    task_container_.CheckTasks();
+}
+
+void Page::onProgressChanged()
+{
+    emit progressChanged();
+}
+
+float Page::getProgress() const noexcept
+{
+    return task_container_.getProgressPercent();
 }

@@ -45,7 +45,7 @@ TaskItem* TaskItem::SetTitle(const QString& title)
   return this;
 }
 
-void TaskItem::Check()
+void TaskItem::CheckAsync()
 {
     // TODO(MN): Thread safe(Not only for ui button)
     SetEnable(false);
@@ -59,6 +59,21 @@ void TaskItem::Check()
     }).detach();
 }
 
+bool TaskItem::Check()
+{
+    // TODO(MN): Thread safe(Not only for ui button)
+    SetEnable(false);
+    SetState(State::kWait);
+
+    // TODO(MN): Handle timeout
+    const auto is_done = checker_();
+    SetState(is_done ? State::kDone : State::kFail);
+    SetEnable(true);
+    emit OnStateChanged(id_, is_done);
+
+    return is_done;
+}
+
 void TaskItem::Run()
 {
     SetEnable(false);
@@ -67,9 +82,10 @@ void TaskItem::Run()
     std::thread([this](){
         // TODO(MN): Handle timeout
         task_();
-        const State state = checker_() ? State::kDone : State::kFail;
-        SetState(state);
+        const auto is_done = checker_();
+        SetState(is_done ? State::kDone : State::kFail);
         SetEnable(true);
+        emit OnStateChanged(id_, is_done);
     }).detach();
 }
 

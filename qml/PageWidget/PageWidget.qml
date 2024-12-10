@@ -6,7 +6,7 @@ import Page.Page 1.0
 
 
 Rectangle {
-    property Page page
+    property Page page: null
     color: "#f0f0f0"
 
     Column {

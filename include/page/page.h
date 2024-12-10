@@ -12,9 +12,9 @@ class Page : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY OnTitleChanged)
-    Q_PROPERTY(float progress READ GetProgress NOTIFY OnProgressChanged)
     Q_PROPERTY(unsigned int tasks_count READ GetTasksCount NOTIFY OnTasksCountChanged)
     Q_PROPERTY(QVariantList taskList READ GetTaskList NOTIFY onTaskListChanged)
+    Q_PROPERTY(float progress READ getProgress NOTIFY progressChanged)
 
 public:
     Page();
@@ -24,7 +24,6 @@ public:
 
     QString GetTitle() const noexcept;
     void SetTitle(const QString& title);
-    float GetProgress() const noexcept;
     unsigned int GetTasksCount();
 
     QVariantList GetTaskList();
@@ -38,12 +37,17 @@ public:
     void SetID(const unsigned int id) noexcept;
     Q_INVOKABLE unsigned int GetID() const noexcept;
     Q_INVOKABLE void CheckAllTasks() const noexcept;
+    float getProgress() const noexcept;
 
 signals:
     void OnTitleChanged();
-    void OnProgressChanged();
+    void progressChanged();
     void OnTasksCountChanged();
     void onTaskListChanged();
+    // TOOD(MN): Signal of on page enter/exit/complete(all tasks done)
+
+private slots:
+    void onProgressChanged();
 
 private:
     uint32_t id_;// TODO(MN): Hold it unique. use builder
@@ -51,8 +55,6 @@ private:
     float progress_;
     uint8_t tasks_count_;
     TaskContainer task_container_;
-
-    void SetProgress(const float& percent);
 };
 
 
