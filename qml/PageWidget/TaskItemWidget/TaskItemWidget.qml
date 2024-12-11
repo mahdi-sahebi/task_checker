@@ -8,7 +8,7 @@ Row {
     width: parent.width
     height: 40
 
-    Image {
+    Image {// TODO(MN): Use button. Change the base element of button to be Image
         id: button
         source: task_item.image_path
         width: 20
