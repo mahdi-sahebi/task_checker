@@ -82,26 +82,36 @@ void TaskContainer::SetList(const QVariantList& list)
     }
 }
 
-void TaskContainer::CheckTasks() const noexcept
+void TaskContainer::CheckTasks() noexcept
 {
     //TODO(MN): Run all task checker on separated thread
-//    uint32_t passed_count = 0;
-//    uint32_t last_index = static_cast<uint32_t>(list_.size());
 
-//    while (last_index--) {
-//        TaskItem* const task = list_[last_index].value<TaskItem*>();
-//        if (nullptr == task) {
-//            continue;
-//        }
+    is_run_.clear();
+    for (auto& [task_id, is_done]: is_done_) {
+        is_done = false;
+        is_run_[task_id] = true;
+    }
 
-//        task->CheckAsync();
-//    }
+
+    uint32_t last_index = static_cast<uint32_t>(list_.size());
+
+    while (last_index--) {
+        TaskItem* const task = list_[last_index].value<TaskItem*>();
+        if (nullptr == task) {
+            continue;
+        }
+
+        task->CheckAsync();
+    }
 }
 
 void TaskContainer::taskStateChanged(const TaskItem::ID task_id, const bool is_done)
 {
     is_done_[task_id] = is_done;
     CalculateProgress();
+
+    is_run_[task_id] = false;
+    CheckTasksDone();
 }
 
 void TaskContainer::CalculateProgress()
@@ -112,11 +122,27 @@ void TaskContainer::CalculateProgress()
         doneCounter += static_cast<uint8_t>(is_done);
     }
 
-    float percent = static_cast<float>(doneCounter) / is_done_.size();
+    const float percent = static_cast<float>(doneCounter) / is_done_.size();
 
     if (percent != progressPercent_) {
         progressPercent_ = percent;
         emit progressPercentChanged();
+    }
+}
+
+void TaskContainer::CheckTasksDone()
+{
+    bool all_done = true;
+
+    for (auto& [task_id, is_run]: is_run_) {
+        if (true == is_run) {
+            all_done = false;
+            break;
+        }
+    }
+
+    if (all_done) {
+        emit tasksChecked();
     }
 }
 

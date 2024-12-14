@@ -1,3 +1,8 @@
+/* TOOD(MN): Signal of on page enter/exit/complete(all tasks done)
+ * TODO(MN): Hold ID unique. use builder
+ *
+ */
+
 #ifndef PAGE_H_
 #define PAGE_H_
 
@@ -7,6 +12,7 @@
 #include <QObject>
 #include <QVariantList>
 #include <task_item/task_container.h>
+
 
 class Page : public QObject
 {
@@ -24,7 +30,7 @@ public:
 
     QString GetTitle() const noexcept;
     void SetTitle(const QString& title);
-    unsigned int GetTasksCount();
+    unsigned int GetTasksCount() const noexcept;
 
     QVariantList GetTaskList();
     void AddTask(const uint8_t task_id,
@@ -35,8 +41,8 @@ public:
     void ClearTasks();
 
     void SetID(const unsigned int id) noexcept;
-    Q_INVOKABLE unsigned int GetID() const noexcept;
-    Q_INVOKABLE void CheckAllTasks() const noexcept;
+    unsigned int GetID() const noexcept;
+    Q_INVOKABLE void CheckTasks() noexcept;
     float getProgress() const noexcept;
 
 signals:
@@ -44,17 +50,20 @@ signals:
     void progressChanged();
     void OnTasksCountChanged();
     void onTaskListChanged();
-    // TOOD(MN): Signal of on page enter/exit/complete(all tasks done)
+    void checkTasksBegan();
+    void checkTasksEnded();
 
 private slots:
     void onProgressChanged();
+    void onTasksChecked();
 
 private:
-    uint32_t id_;// TODO(MN): Hold it unique. use builder
+    uint32_t id_;
     QString title_;
     float progress_;
     uint8_t tasks_count_;
     TaskContainer task_container_;
+
 };
 
 

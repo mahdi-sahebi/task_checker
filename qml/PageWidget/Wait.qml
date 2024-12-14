@@ -1,6 +1,7 @@
 import QtQuick 2.6
 
 
+// TODO(MN): Prevent to several show/hide
 // TODO(MN): Make it available to change image source, speed, etc from outside
 Rectangle {
     id: mask
@@ -10,11 +11,10 @@ Rectangle {
     visible: false
     z: 100
 
-
     Image {
         property real ratio: 1
 
-        id: waiting
+        id: icon_image
         width: Math.min(parent.width * 0.5, parent.height * ratio)
         height: width * ratio
         anchors.centerIn: parent
@@ -22,7 +22,7 @@ Rectangle {
 
         RotationAnimation {
             id: rotationAnimation
-            target: waiting
+            target: icon_image
             property: "rotation"
             duration: 2000
             loops: Animation.Infinite
@@ -54,18 +54,18 @@ Rectangle {
         }
     }
 
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.AllButtons
+        preventStealing: true
+    }
+
     function show() {
-        mask.visible = true
+        mask.visible = true;
         fadeInAnimation.start()
     }
 
     function hide() {
         fadeOutAnimation.start();
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.AllButtons
-        preventStealing: true
     }
 }

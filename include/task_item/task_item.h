@@ -9,6 +9,7 @@
 #include <QString>
 
 // namespace Task::Item
+// Thread-safety for all APIs
 class TaskItem : public QObject
 {
     Q_OBJECT

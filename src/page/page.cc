@@ -1,5 +1,6 @@
 #include "page/page.h"
 
+
 Page::Page() :
     id_{0},
     title_{""},
@@ -7,6 +8,7 @@ Page::Page() :
     tasks_count_{0}
 {
     QObject::connect(&task_container_, &TaskContainer::progressPercentChanged, this, &Page::onProgressChanged);
+    QObject::connect(&task_container_, &TaskContainer::tasksChecked, this, &Page::onTasksChecked);
 }
 
 Page::~Page()
@@ -25,7 +27,7 @@ void Page::SetTitle(const QString& title)
     emit OnTitleChanged();
 }
 
-unsigned int Page::GetTasksCount()
+unsigned int Page::GetTasksCount() const noexcept
 {
     return tasks_count_;
 }
@@ -70,14 +72,25 @@ unsigned int Page::GetID() const noexcept
     return id_;
 }
 
-void Page::CheckAllTasks() const noexcept
+void Page::CheckTasks() noexcept
 {
+    // TODO(MN): Thread-safety
+    if (0 == task_container_.GetCount()) {
+        return;
+    }
+
+    emit checkTasksBegan();
     task_container_.CheckTasks();
 }
 
 void Page::onProgressChanged()
 {
     emit progressChanged();
+}
+
+void Page::onTasksChecked()
+{
+    emit checkTasksEnded();
 }
 
 float Page::getProgress() const noexcept

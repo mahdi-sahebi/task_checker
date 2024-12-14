@@ -2,6 +2,7 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.12
 
+
 Rectangle {
     color: "#f0f0f0"
 
@@ -37,10 +38,13 @@ Rectangle {
             }
         }/* Repeater */
 
-        onCurrentIndexChanged:  {
-            page_container.list[currentIndex].CheckAllTasks();
+        onCurrentIndexChanged: {
+            var page = page_container.list[currentIndex];
+            page.CheckTasks();
         }
-    }/* SwipeView */
+    }
+
+
 }
 
 //page container in qml is not on the page class

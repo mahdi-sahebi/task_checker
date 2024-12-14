@@ -2,6 +2,7 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import "PageWidget"// TODO(MN): rename to Page
 
+
 Window
 {
     id: window
@@ -60,35 +61,12 @@ Window
         }
     }
 
-
-    Rectangle {
-            id: mainContent
-            anchors.fill: parent
-            color: "lightgray"
-
-            Row {
-                width: parent.width
-                height: 100
-                spacing: 40
-
-            Button {
-                text: "Show"
-                anchors.top: parent.top
-                onClicked: waitingSplash.show()
-            }
-            Button {
-                text: "Hide"
-                anchors.top: parent.top
-                onClicked: waitingSplash.hide()
-            }
-            }
-        }
-
-        Wait {
-            id: waitingSplash
-            width: parent.width / 2
-            height: parent.height / 2
-            anchors.centerIn: parent
-        }
-
 }
+
+
+
+
+
+
+
+

@@ -7,6 +7,7 @@ import Page.Page 1.0
 
 Rectangle {
     property Page page: null
+
     color: "#f0f0f0"
 
     Column {
@@ -48,7 +49,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     Repeater {
-                        model: page.taskList
+                        model:  page.taskList
                         delegate: TaskItemWidget {
                             task_item: modelData
                         }
@@ -67,4 +68,25 @@ Rectangle {
             percent: page.progress
         }
     }
+
+    Wait {
+        id: waiting
+        anchors.fill: parent
+        anchors.centerIn: parent
+    }
+
+//    // TODO(MN): rename to check all tasks, and hideWaiting on a signal of ending checiingk
+//
+    Connections {
+        target: page
+
+        onCheckTasksBegan: {
+            waiting.show();
+        }
+
+        onCheckTasksEnded: {
+            waiting.hide();
+        }
+    }
+
 }

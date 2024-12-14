@@ -28,7 +28,7 @@ uint32_t TaskItem::GetID()
     return id_;
 }
 
-TaskItem* TaskItem::Build()
+TaskItem* TaskItem::Build()// TODO(MN): Bad builder implementation
 {
     return new TaskItem();
 }
@@ -53,9 +53,10 @@ void TaskItem::CheckAsync()
 
     std::thread([this](){
         // TODO(MN): Handle timeout
-        const State state = checker_() ? State::kDone : State::kFail;
-        SetState(state);
+        const auto is_done = checker_();
+        SetState(is_done ? State::kDone : State::kFail);
         SetEnable(true);
+        emit OnStateChanged(id_, is_done);
     }).detach();
 }
 

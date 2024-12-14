@@ -27,22 +27,25 @@ public:
     Q_INVOKABLE int GetCount();
     QVariantList GetList();
     void SetList(const QVariantList& list);// TODO(MN): Private
-    void CheckTasks() const noexcept;
+    void CheckTasks() noexcept;
     float getProgressPercent() const noexcept;
 
 signals:
     void OnListChanged();
     void progressPercentChanged();
+    void tasksChecked();
 
 public slots:
     void taskStateChanged(const TaskItem::ID task_id, const bool is_done);
 
 private:
     QVariantList list_;
-    std::map<TaskItem::ID, bool> is_done_;// TODO(MN): list?
+    std::map<TaskItem::ID, bool> is_done_;// TODO(MN): Rename to ...list_
+    std::map<TaskItem::ID, bool> is_run_;
     float progressPercent_;
 
     void CalculateProgress();
+    void CheckTasksDone();
 };
 
 
