@@ -19,14 +19,16 @@ Rectangle {
             anchors.fill: parent
 
             Rectangle {
+                id: background
                 color: "#464646"
                 width: parent.width
-                height: parent.height
-                anchors.centerIn: parent
+                height: parent.height - 15
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
                 radius: 10
 
                 Rectangle {
-                    color: "#464646"
+                    color: background.color
                     width: 250
                     height: 30
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -73,10 +75,9 @@ Rectangle {
         id: waiting
         anchors.fill: parent
         anchors.centerIn: parent
+        radius: 10
     }
 
-//    // TODO(MN): rename to check all tasks, and hideWaiting on a signal of ending checiingk
-//
     Connections {
         target: page
 
