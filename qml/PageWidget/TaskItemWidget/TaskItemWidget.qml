@@ -3,12 +3,12 @@ import QtQuick.Window 2.2
 import Task.Item 1.0
 
 Row {
-    property TaskItem task_item: nuull
+    property TaskItem task_item: null
 
     width: parent.width
     height: 40
 
-    Image {
+    Image {// TODO(MN): Use button. Change the base element of button to be Image
         id: button
         source: task_item.image_path
         width: 20
@@ -44,7 +44,6 @@ Row {
         target: task_item
 
         onEnableChanged: {
-            console.log("f");
         }
     }
 

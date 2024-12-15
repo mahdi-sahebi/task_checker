@@ -9,5 +9,6 @@
         <file>PageWidget/PageContainerWidget.qml</file>
         <file>PageWidget/ProgressBar.qml</file>
         <file>Button.qml</file>
+        <file>PageWidget/Wait.qml</file>
     </qresource>
 </RCC>

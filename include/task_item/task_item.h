@@ -9,6 +9,7 @@
 #include <QString>
 
 // namespace Task::Item
+// Thread-safety for all APIs
 class TaskItem : public QObject
 {
     Q_OBJECT
@@ -26,12 +27,13 @@ public:
 
   using Checker = std::function<bool()>;
   using Task = std::function<void()>;
+  using ID = uint32_t;// TODO(MN): Use
 
   explicit TaskItem(QObject* parent = nullptr);
   TaskItem(const TaskItem& other) = delete;
   ~TaskItem();
 
-  static TaskItem* Build();
+  static TaskItem* Build();// TOOD(MN): Use separate class
 
   void SetID(const uint32_t id);// TODO(MN): Only for Builder
   uint32_t GetID();
@@ -42,7 +44,8 @@ public:
   bool IsEnabled();
   TaskItem* SetEnable(const bool enable);
   TaskItem* SetTask(const Task task, const Checker checker);
-  Q_INVOKABLE void Check();
+  Q_INVOKABLE void CheckAsync();
+  Q_INVOKABLE bool Check();
   Q_INVOKABLE void Run();
 
 signals:
@@ -50,9 +53,10 @@ signals:
   void OnImagePathChanged();
   void onEnableChanged();
   void OnIDChanged();
+  void OnStateChanged(const unsigned int id, const bool is_done);
 
 private:
-  uint32_t id_;
+  ID id_;
   bool is_enabled_;
   QString title_;
   QString image_path_;

@@ -6,7 +6,8 @@ import Page.Page 1.0
 
 
 Rectangle {
-    property Page page
+    property Page page: null
+
     color: "#f0f0f0"
 
     Column {
@@ -18,14 +19,16 @@ Rectangle {
             anchors.fill: parent
 
             Rectangle {
+                id: background
                 color: "#464646"
                 width: parent.width
-                height: parent.height
-                anchors.centerIn: parent
+                height: parent.height - 15
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
                 radius: 10
 
                 Rectangle {
-                    color: "#464646"
+                    color: background.color
                     width: 250
                     height: 30
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -48,7 +51,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     Repeater {
-                        model: page.taskList
+                        model:  page.taskList
                         delegate: TaskItemWidget {
                             task_item: modelData
                         }
@@ -64,8 +67,27 @@ Rectangle {
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottomMargin: 5
-            percent: 0.97
+            percent: page.progress
+        }
+    }
+
+    Wait {
+        id: waiting
+        anchors.fill: parent
+        anchors.centerIn: parent
+        radius: 10
+    }
+
+    Connections {
+        target: page
+
+        onCheckTasksBegan: {
+            waiting.show();
         }
 
+        onCheckTasksEnded: {
+            waiting.hide();
+        }
     }
+
 }

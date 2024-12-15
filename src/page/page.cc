@@ -1,13 +1,14 @@
 #include "page/page.h"
 
+
 Page::Page() :
     id_{0},
     title_{""},
     progress_{0.0F},
-    tasks_count_{0}//,
-//    task_container_{nullptr}
+    tasks_count_{0}
 {
-
+    QObject::connect(&task_container_, &TaskContainer::progressPercentChanged, this, &Page::onProgressChanged);
+    QObject::connect(&task_container_, &TaskContainer::tasksChecked, this, &Page::onTasksChecked);
 }
 
 Page::~Page()
@@ -26,26 +27,9 @@ void Page::SetTitle(const QString& title)
     emit OnTitleChanged();
 }
 
-float Page::GetProgress() const noexcept
-{
-    return 0.0F;
-}
-
-void Page::SetProgress(const float& percent)
-{
-    progress_ = percent;
-    emit OnProgressChanged();
-}
-
-uint8_t Page::GetTasksCount()
+unsigned int Page::GetTasksCount() const noexcept
 {
     return tasks_count_;
-}
-
-void Page::SetTasksCount(const uint8_t& count)
-{
-    tasks_count_ = count;
-    emit OnTasksCountChanged();
 }
 
 QVariantList Page::GetTaskList()
@@ -65,6 +49,8 @@ void Page::AddTask(
     task_container_.Add(task_id, title, task, checker);
 }
 
+// TODO(MN): Remove the duplicate interface connection APIs like this.
+// Use a get task container and call direct in QML file
 void Page::RemoveTask(const uint8_t task_id)
 {
     // TODO(MN): Use correct concept of task id instead of index
@@ -76,12 +62,38 @@ void Page::ClearTasks()
     task_container_.Clear();
 }
 
-void Page::SetID(const uint32_t id) noexcept
+void Page::SetID(const unsigned int id) noexcept
 {
     id_ = id;
 }
 
-uint32_t Page::GetID() const noexcept
+unsigned int Page::GetID() const noexcept
 {
     return id_;
+}
+
+void Page::CheckTasks() noexcept
+{
+    // TODO(MN): Thread-safety
+    if (0 == task_container_.GetCount()) {
+        return;
+    }
+
+    emit checkTasksBegan();
+    task_container_.CheckTasks();
+}
+
+void Page::onProgressChanged()
+{
+    emit progressChanged();
+}
+
+void Page::onTasksChecked()
+{
+    emit checkTasksEnded();
+}
+
+float Page::getProgress() const noexcept
+{
+    return task_container_.getProgressPercent();
 }

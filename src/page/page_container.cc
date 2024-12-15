@@ -64,3 +64,4 @@ void PageContainer::Clear()
 
     emit OnListChanged();
 }
+
