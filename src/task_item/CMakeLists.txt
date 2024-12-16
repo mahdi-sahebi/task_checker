@@ -3,6 +3,7 @@ set(PUBLIC_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
 set(PRIVATE_INCLUDE_DIRS "")
 set(HEADERS
     ${PUBLIC_INCLUDE_DIRS}/task_item/task_item.h
+    ${PUBLIC_INCLUDE_DIRS}/task_item/task_container_interface.h
     ${PUBLIC_INCLUDE_DIRS}/task_item/task_container.h
 )
 

@@ -3,40 +3,41 @@
 
 #include <map>
 #include <QObject>
+#include <QString>
 #include <QVariantList>
 #include "task_item.h"
+#include "task_container_interface.h"
 
 
-// TODO(MN): Apply google naming convension
-class TaskContainer : public QObject
+class TaskContainer : public TaskContainerInterface
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantList list READ GetList WRITE SetList NOTIFY OnListChanged)
-    Q_PROPERTY(float progressPercent READ getProgressPercent NOTIFY progressPercentChanged)
+    Q_PROPERTY(QVariantList list READ GetList WRITE SetList NOTIFY listChanged)
+    Q_PROPERTY(float progressPercent READ GetProgressPercent NOTIFY progressPercentChanged)
 
 public:
     explicit TaskContainer(QObject* parent = nullptr);
     TaskContainer(const TaskContainer& other) = delete;
     ~TaskContainer();
-    Q_INVOKABLE void Add(const uint8_t task_id, // TODO(MN): Optimize arg count
-                         const QString title,
-                         const TaskItem::Task task,
-                         const TaskItem::Checker checker);
-    Q_INVOKABLE void Remove(const unsigned int task_id);
-    Q_INVOKABLE void Clear();
-    Q_INVOKABLE int GetCount();
+
+    Q_INVOKABLE void AddTask(const int taskID, // TODO(MN): Optimize arg count
+                             const QString title,
+                             const TaskItem::Task task,
+                             const TaskItem::Checker checker) override;
+    Q_INVOKABLE void RemoveTask(const int taskID) override;
+    Q_INVOKABLE void ClearTasks() noexcept override;
+    Q_INVOKABLE int GetTasksCount() const noexcept override;
+    float GetProgressPercent() const noexcept override;
     QVariantList GetList();
     void SetList(const QVariantList& list);// TODO(MN): Private
     void CheckTasks() noexcept;
-    float getProgressPercent() const noexcept;
 
 signals:
-    void OnListChanged();
+    void listChanged();
     void progressPercentChanged();
-    void tasksChecked();
 
 public slots:
-    void taskStateChanged(const TaskItem::ID task_id, const bool is_done);
+    void onTaskStateChanged(const TaskItem::ID taskID, const bool is_done);
 
 private:
     QVariantList list_;

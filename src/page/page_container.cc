@@ -20,7 +20,7 @@ Page* PageContainer::Add(const uint16_t id, const QString& title)
         page->SetID(id);
         page->SetTitle(title);
         list_.append(QVariant::fromValue(page));
-        emit OnListChanged();
+        emit listChanged();
     }
 
     return page;
@@ -39,7 +39,7 @@ bool PageContainer::Remove(const uint16_t id)
 
         delete page;
         list_.removeAt(index);
-        emit OnListChanged();
+        emit listChanged();
         return true;
     }
 
@@ -62,6 +62,6 @@ void PageContainer::Clear()
         list_.removeAt(index);
     }
 
-    emit OnListChanged();
+    emit listChanged();
 }
 

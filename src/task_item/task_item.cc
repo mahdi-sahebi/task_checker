@@ -41,7 +41,7 @@ QString TaskItem::GetTitle()
 TaskItem* TaskItem::SetTitle(const QString& title)
 {
   title_ = title;
-  emit OnTitleChanged();
+  emit titleChanged();
   return this;
 }
 

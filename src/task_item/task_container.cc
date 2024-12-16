@@ -9,11 +9,11 @@ TaskContainer::TaskContainer(QObject* parent) :
 
 TaskContainer::~TaskContainer()
 {
-    Clear();
+    ClearTasks();
 }
 
-void TaskContainer::Add(
-    const uint8_t task_id,
+void TaskContainer::AddTask(
+    const int taskID,
     const QString title,
     const TaskItem::Task task,
     const TaskItem::Checker checker)
@@ -24,47 +24,47 @@ void TaskContainer::Add(
 
     if (nullptr != task_item) {
         // TODO(MN): Handle unique list and exceptions
-        is_done_[task_id] = false;
+        is_done_[taskID] = false;
 
-        task_item->SetID(task_id);// TODO(MN): Keep it unique
+        task_item->SetID(taskID);// TODO(MN): Keep it unique
         list_.append(QVariant::fromValue(task_item));
 
-        QObject::connect(task_item, &TaskItem::OnStateChanged, this, &TaskContainer::taskStateChanged);
-        emit OnListChanged();
+        QObject::connect(task_item, &TaskItem::OnStateChanged, this, &TaskContainer::onTaskStateChanged);
+        emit listChanged();
     }
 }
 
-void TaskContainer::Remove(const unsigned int task_id)// TODO(MN): Correct data type
+void TaskContainer::RemoveTask(const int taskID)// TODO(MN): Correct data type
 {
-    // TODO(MN): How to use map for QVariantList to not search?
+    // TODO(MN): How to use map for QVariantList to not linear search?
     for (uint32_t index = 0; index < static_cast<uint32_t>(list_.size()); index++) {
         TaskItem* const task_item = list_[index].value<TaskItem*>();
 
-        if ((nullptr == task_item) || (task_item->GetID() != task_id)) {
+        if ((nullptr == task_item) || (task_item->GetID() != static_cast<uint32_t>(taskID))) {
             continue;
         }
 
         // TODO(MN): Check existance and handle exceptions
-        is_done_.erase(is_done_.find(task_id));
+        is_done_.erase(is_done_.find(taskID));
 
-        QObject::disconnect(task_item, &TaskItem::OnStateChanged, this, &TaskContainer::taskStateChanged);
+        QObject::disconnect(task_item, &TaskItem::OnStateChanged, this, &TaskContainer::onTaskStateChanged);
         delete task_item;
 
         list_.removeAt(index);
-        emit OnListChanged();
+        emit listChanged();
     }
 }
 
-void TaskContainer::Clear()
+void TaskContainer::ClearTasks() noexcept
 {
     uint32_t last_index = static_cast<uint32_t>(list_.size());
 
     while (last_index--) {
-        Remove(last_index);
+        RemoveTask(last_index);
     }
 }
 
-int TaskContainer::GetCount()
+int TaskContainer::GetTasksCount() const noexcept
 {
     return list_.size();
 }
@@ -78,7 +78,7 @@ void TaskContainer::SetList(const QVariantList& list)
 {
     if (list != list_) {
         list_ = list;
-        emit OnListChanged();
+        emit listChanged();
     }
 }
 
@@ -87,9 +87,9 @@ void TaskContainer::CheckTasks() noexcept
     //TODO(MN): Run all task checker on separated thread
 
     is_run_.clear();
-    for (auto& [task_id, is_done]: is_done_) {
+    for (auto& [taskID, is_done]: is_done_) {
         is_done = false;
-        is_run_[task_id] = true;
+        is_run_[taskID] = true;
     }
 
 
@@ -105,12 +105,12 @@ void TaskContainer::CheckTasks() noexcept
     }
 }
 
-void TaskContainer::taskStateChanged(const TaskItem::ID task_id, const bool is_done)
+void TaskContainer::onTaskStateChanged(const TaskItem::ID taskID, const bool is_done)
 {
-    is_done_[task_id] = is_done;
+    is_done_[taskID] = is_done;
     CalculateProgress();
 
-    is_run_[task_id] = false;
+    is_run_[taskID] = false;
     CheckTasksDone();
 }
 
@@ -118,7 +118,7 @@ void TaskContainer::CalculateProgress()
 {
     uint32_t doneCounter{0};
 
-    for (const auto& [task_id, is_done] : is_done_) {
+    for (const auto& [taskID, is_done] : is_done_) {
         doneCounter += static_cast<uint8_t>(is_done);
     }
 
@@ -134,7 +134,7 @@ void TaskContainer::CheckTasksDone()
 {
     bool all_done = true;
 
-    for (auto& [task_id, is_run]: is_run_) {
+    for (auto& [taskID, is_run]: is_run_) {
         if (true == is_run) {
             all_done = false;
             break;
@@ -142,11 +142,11 @@ void TaskContainer::CheckTasksDone()
     }
 
     if (all_done) {
-        emit tasksChecked();
+        emit taskListChanged();
     }
 }
 
-float TaskContainer::getProgressPercent() const noexcept
+float TaskContainer::GetProgressPercent() const noexcept
 {
     return progressPercent_;
 }

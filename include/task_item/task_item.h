@@ -13,7 +13,7 @@
 class TaskItem : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY OnTitleChanged)
+    Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY titleChanged)
     Q_PROPERTY(QString image_path READ GetImagePath WRITE SetImagePath NOTIFY OnImagePathChanged)
     Q_PROPERTY(bool is_enabled READ IsEnabled() WRITE SetEnable NOTIFY onEnableChanged)
 
@@ -49,7 +49,7 @@ public:
   Q_INVOKABLE void Run();
 
 signals:
-  void OnTitleChanged();
+  void titleChanged();
   void OnImagePathChanged();
   void onEnableChanged();
   void OnIDChanged();

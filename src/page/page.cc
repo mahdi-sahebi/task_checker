@@ -8,7 +8,7 @@ Page::Page() :
     tasks_count_{0}
 {
     QObject::connect(&task_container_, &TaskContainer::progressPercentChanged, this, &Page::onProgressChanged);
-    QObject::connect(&task_container_, &TaskContainer::tasksChecked, this, &Page::onTasksChecked);
+    QObject::connect(&task_container_, &TaskContainer::taskListChanged, this, &Page::onTasksChecked);
 }
 
 Page::~Page()
@@ -24,10 +24,10 @@ QString Page::GetTitle() const noexcept
 void Page::SetTitle(const QString& title)
 {
     title_ = title;
-    emit OnTitleChanged();
+    emit titleChanged();
 }
 
-unsigned int Page::GetTasksCount() const noexcept
+int Page::GetTasksCount() const noexcept
 {
     return tasks_count_;
 }
@@ -38,28 +38,25 @@ QVariantList Page::GetTaskList()
 }
 
 void Page::AddTask(
-        const uint8_t task_id,
+        const int taskID,
         const QString title,
         const TaskItem::Task task,
         const TaskItem::Checker checker)
 {
-    QObject::connect(&task_container_, &TaskContainer::OnListChanged, this, &Page::onTaskListChanged);
-    // TODO(MN): Connect arguments
-    // TODO(MN): Use base interface
-    task_container_.Add(task_id, title, task, checker);
+    QObject::connect(&task_container_, &TaskContainer::listChanged, this, &Page::taskListChanged);
+    task_container_.AddTask(taskID, title, task, checker);
 }
 
 // TODO(MN): Remove the duplicate interface connection APIs like this.
 // Use a get task container and call direct in QML file
-void Page::RemoveTask(const uint8_t task_id)
+void Page::RemoveTask(const int taskID)
 {
-    // TODO(MN): Use correct concept of task id instead of index
-    task_container_.Remove(task_id);
+    task_container_.RemoveTask(taskID);
 }
 
-void Page::ClearTasks()
+void Page::ClearTasks() noexcept
 {
-    task_container_.Clear();
+    task_container_.ClearTasks();
 }
 
 void Page::SetID(const unsigned int id) noexcept
@@ -75,7 +72,7 @@ unsigned int Page::GetID() const noexcept
 void Page::CheckTasks() noexcept
 {
     // TODO(MN): Thread-safety
-    if (0 == task_container_.GetCount()) {
+    if (0 == task_container_.GetTasksCount()) {
         return;
     }
 
@@ -93,7 +90,7 @@ void Page::onTasksChecked()
     emit checkTasksEnded();
 }
 
-float Page::getProgress() const noexcept
+float Page::GetProgressPercent() const noexcept
 {
-    return task_container_.getProgressPercent();
+    return task_container_.GetProgressPercent();
 }
