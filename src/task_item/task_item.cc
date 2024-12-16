@@ -13,11 +13,6 @@ TaskItem::TaskItem(QObject* parent) :
   SetState(State::kFail);
 }
 
-TaskItem::~TaskItem()
-{
-
-}
-
 void TaskItem::SetID(const uint32_t id)
 {
     id_ = id;
@@ -53,10 +48,10 @@ void TaskItem::CheckAsync()
 
     std::thread([this](){
         // TODO(MN): Handle timeout
-        const auto is_done = checker_();
-        SetState(is_done ? State::kDone : State::kFail);
+        const auto isDone = checker_();
+        SetState(isDone ? State::kDone : State::kFail);
         SetEnable(true);
-        emit OnStateChanged(id_, is_done);
+        emit OnStateChanged(id_, isDone);
     }).detach();
 }
 
@@ -67,12 +62,12 @@ bool TaskItem::Check()
     SetState(State::kWait);
 
     // TODO(MN): Handle timeout
-    const auto is_done = checker_();
-    SetState(is_done ? State::kDone : State::kFail);
+    const auto isDone = checker_();
+    SetState(isDone ? State::kDone : State::kFail);
     SetEnable(true);
-    emit OnStateChanged(id_, is_done);
+    emit OnStateChanged(id_, isDone);
 
-    return is_done;
+    return isDone;
 }
 
 void TaskItem::Run()
@@ -83,10 +78,10 @@ void TaskItem::Run()
     std::thread([this](){
         // TODO(MN): Handle timeout
         task_();
-        const auto is_done = checker_();
-        SetState(is_done ? State::kDone : State::kFail);
+        const auto isDone = checker_();
+        SetState(isDone ? State::kDone : State::kFail);
         SetEnable(true);
-        emit OnStateChanged(id_, is_done);
+        emit OnStateChanged(id_, isDone);
     }).detach();
 }
 
@@ -104,12 +99,12 @@ void TaskItem::SetState(const State state)
 
 QString TaskItem::GetImagePath()
 {
-  return image_path_;
+  return imagePath_;
 }
 
-void TaskItem::SetImagePath(const QString& image_path)
+void TaskItem::SetImagePath(const QString& imagePath)
 {
-  image_path_ = image_path;
+  imagePath_ = imagePath;
   emit OnImagePathChanged();
 }
 

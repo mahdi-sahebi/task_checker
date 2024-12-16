@@ -14,8 +14,8 @@ class TaskItem : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY titleChanged)
-    Q_PROPERTY(QString image_path READ GetImagePath WRITE SetImagePath NOTIFY OnImagePathChanged)
-    Q_PROPERTY(bool is_enabled READ IsEnabled() WRITE SetEnable NOTIFY onEnableChanged)
+    Q_PROPERTY(QString imagePath READ GetImagePath WRITE SetImagePath NOTIFY OnImagePathChanged)
+    Q_PROPERTY(bool isEnabled READ IsEnabled() WRITE SetEnable NOTIFY onEnableChanged)
 
 public:
   enum class State
@@ -30,8 +30,9 @@ public:
   using ID = uint32_t;// TODO(MN): Use
 
   explicit TaskItem(QObject* parent = nullptr);
-  TaskItem(const TaskItem& other) = delete;
-  ~TaskItem();
+  TaskItem(const TaskItem&) = delete;
+  TaskItem& operator=(const TaskItem&) = delete;
+  virtual ~TaskItem() = default;
 
   static TaskItem* Build();// TOOD(MN): Use separate class
 
@@ -40,7 +41,7 @@ public:
   QString GetTitle();
   TaskItem* SetTitle(const QString& title);
   QString GetImagePath();
-  void SetImagePath(const QString& image_path);
+  void SetImagePath(const QString& imagePath);
   bool IsEnabled();
   TaskItem* SetEnable(const bool enable);
   TaskItem* SetTask(const Task task, const Checker checker);
@@ -53,13 +54,13 @@ signals:
   void OnImagePathChanged();
   void onEnableChanged();
   void OnIDChanged();
-  void OnStateChanged(const unsigned int id, const bool is_done);
+  void OnStateChanged(const unsigned int id, const bool isDone);
 
 private:
   ID id_;
   bool is_enabled_;
   QString title_;
-  QString image_path_;
+  QString imagePath_;
   Task task_;
   Checker checker_;
 

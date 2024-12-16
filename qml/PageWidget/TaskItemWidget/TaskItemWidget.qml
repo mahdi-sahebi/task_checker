@@ -10,14 +10,14 @@ Row {
 
     Image {// TODO(MN): Use button. Change the base element of button to be Image
         id: button
-        source: task_item.image_path
+        source: task_item.imagePath
         width: 20
         height: 20
         anchors.verticalCenter: parent.verticalCenter
 
         MouseArea {
             anchors.fill: parent
-            enabled: task_item.is_enabled
+            enabled: task_item.isEnabled
 
             onClicked: {
                 task_item.Run();
@@ -33,7 +33,7 @@ Row {
         from: 0
         to: 360
         loops: Animation.Infinite
-        running: !task_item.is_enabled
+        running: !task_item.isEnabled
 
         onStopped: {
             button.rotation = 0;
@@ -54,6 +54,6 @@ Row {
         anchors.left: parent.left
         anchors.leftMargin: 30
         anchors.verticalCenter: parent.verticalCenter
-        opacity: task_item.is_enabled ? 1 : 0.5
+        opacity: task_item.isEnabled ? 1 : 0.5
     }
 }

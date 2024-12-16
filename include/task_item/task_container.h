@@ -37,11 +37,11 @@ signals:
     void progressPercentChanged();
 
 public slots:
-    void onTaskStateChanged(const TaskItem::ID taskID, const bool is_done);
+    void onTaskStateChanged(const TaskItem::ID taskID, const bool isDone);
 
 private:
     QVariantList list_;
-    std::map<TaskItem::ID, bool> is_done_;// TODO(MN): Rename to ...list_
+    std::map<TaskItem::ID, bool> isDone_;// TODO(MN): Rename to ...list_
     std::map<TaskItem::ID, bool> is_run_;
     float progressPercent_;
 

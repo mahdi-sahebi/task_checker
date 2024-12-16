@@ -24,7 +24,7 @@ void TaskContainer::AddTask(
 
     if (nullptr != task_item) {
         // TODO(MN): Handle unique list and exceptions
-        is_done_[taskID] = false;
+        isDone_[taskID] = false;
 
         task_item->SetID(taskID);// TODO(MN): Keep it unique
         list_.append(QVariant::fromValue(task_item));
@@ -45,7 +45,7 @@ void TaskContainer::RemoveTask(const int taskID)// TODO(MN): Correct data type
         }
 
         // TODO(MN): Check existance and handle exceptions
-        is_done_.erase(is_done_.find(taskID));
+        isDone_.erase(isDone_.find(taskID));
 
         QObject::disconnect(task_item, &TaskItem::OnStateChanged, this, &TaskContainer::onTaskStateChanged);
         delete task_item;
@@ -87,8 +87,8 @@ void TaskContainer::CheckTasks() noexcept
     //TODO(MN): Run all task checker on separated thread
 
     is_run_.clear();
-    for (auto& [taskID, is_done]: is_done_) {
-        is_done = false;
+    for (auto& [taskID, isDone]: isDone_) {
+        isDone = false;
         is_run_[taskID] = true;
     }
 
@@ -105,9 +105,9 @@ void TaskContainer::CheckTasks() noexcept
     }
 }
 
-void TaskContainer::onTaskStateChanged(const TaskItem::ID taskID, const bool is_done)
+void TaskContainer::onTaskStateChanged(const TaskItem::ID taskID, const bool isDone)
 {
-    is_done_[taskID] = is_done;
+    isDone_[taskID] = isDone;
     CalculateProgress();
 
     is_run_[taskID] = false;
@@ -118,11 +118,11 @@ void TaskContainer::CalculateProgress()
 {
     uint32_t doneCounter{0};
 
-    for (const auto& [taskID, is_done] : is_done_) {
-        doneCounter += static_cast<uint8_t>(is_done);
+    for (const auto& [taskID, isDone] : isDone_) {
+        doneCounter += static_cast<uint8_t>(isDone);
     }
 
-    const float percent = static_cast<float>(doneCounter) / is_done_.size();
+    const float percent = static_cast<float>(doneCounter) / isDone_.size();
 
     if (percent != progressPercent_) {
         progressPercent_ = percent;
