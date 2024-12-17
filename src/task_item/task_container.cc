@@ -18,19 +18,20 @@ void TaskContainer::AddTask(
     const TaskItem::Task task,
     const TaskItem::Checker checker)
 {
-    TaskItem* const task_item = TaskItem::Build()
-            ->SetTitle(title)
-            ->SetTask(task, checker);
+    TaskItem* const taskItem = TaskItem::Builder()
+        .SetID(taskID)
+        .SetTask(task, checker)
+        .SetTitle(title)
+        .Build();
 
-    if (nullptr != task_item) {
-        // TODO(MN): Handle unique list and exceptions
-        isDone_[taskID] = false;
+    if (nullptr != taskItem) {
+      // TODO(MN): Handle unique list and exceptions
+      isDone_[taskID] = false;
 
-        task_item->SetID(taskID);// TODO(MN): Keep it unique
-        list_.append(QVariant::fromValue(task_item));
+      list_.append(QVariant::fromValue(taskItem));
 
-        QObject::connect(task_item, &TaskItem::OnStateChanged, this, &TaskContainer::onTaskStateChanged);
-        emit listChanged();
+      QObject::connect(taskItem, &TaskItem::stateChanged, this, &TaskContainer::onTaskStateChanged);
+      emit listChanged();
     }
 }
 
@@ -47,7 +48,7 @@ void TaskContainer::RemoveTask(const int taskID)// TODO(MN): Correct data type
         // TODO(MN): Check existance and handle exceptions
         isDone_.erase(isDone_.find(taskID));
 
-        QObject::disconnect(task_item, &TaskItem::OnStateChanged, this, &TaskContainer::onTaskStateChanged);
+        QObject::disconnect(task_item, &TaskItem::stateChanged, this, &TaskContainer::onTaskStateChanged);
         delete task_item;
 
         list_.removeAt(index);
@@ -96,12 +97,12 @@ void TaskContainer::CheckTasks() noexcept
     uint32_t last_index = static_cast<uint32_t>(list_.size());
 
     while (last_index--) {
-        TaskItem* const task = list_[last_index].value<TaskItem*>();
-        if (nullptr == task) {
+        TaskItem* const taskItem = list_[last_index].value<TaskItem*>();
+        if (nullptr == taskItem) {
             continue;
         }
 
-        task->CheckAsync();
+        taskItem->CheckAsync();
     }
 }
 

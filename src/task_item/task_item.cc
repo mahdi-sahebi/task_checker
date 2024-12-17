@@ -13,6 +13,25 @@ TaskItem::TaskItem(QObject* parent) :
   SetState(State::kFail);
 }
 
+TaskItem::TaskItem(TaskItem&& other)
+{
+  *this = std::move(other);
+}
+
+TaskItem& TaskItem::operator=(TaskItem&& other)
+{
+  if (this != &other) {
+      id_ = std::move(other.id_);
+      isEnabled_ = std::move(other.isEnabled_);
+      title_ = std::move(other.title_);
+      imagePath_ = std::move(other.imagePath_);
+      task_ = std::move(other.task_);
+      checker_ = std::move(other.checker_);
+  }
+
+  return *this;
+}
+
 void TaskItem::SetID(const uint32_t id)
 {
     id_ = id;
@@ -23,21 +42,15 @@ uint32_t TaskItem::GetID()
     return id_;
 }
 
-TaskItem* TaskItem::Build()// TODO(MN): Bad builder implementation
-{
-    return new TaskItem();
-}
-
 QString TaskItem::GetTitle()
 {
   return title_;
 }
 
-TaskItem* TaskItem::SetTitle(const QString& title)
+void TaskItem::SetTitle(const QString& title)
 {
   title_ = title;
   emit titleChanged();
-  return this;
 }
 
 void TaskItem::CheckAsync()
@@ -51,7 +64,7 @@ void TaskItem::CheckAsync()
         const auto isDone = checker_();
         SetState(isDone ? State::kDone : State::kFail);
         SetEnable(true);
-        emit OnStateChanged(id_, isDone);
+        emit stateChanged(id_, isDone);
     }).detach();
 }
 
@@ -65,7 +78,7 @@ bool TaskItem::Check()
     const auto isDone = checker_();
     SetState(isDone ? State::kDone : State::kFail);
     SetEnable(true);
-    emit OnStateChanged(id_, isDone);
+    emit stateChanged(id_, isDone);
 
     return isDone;
 }
@@ -81,7 +94,7 @@ void TaskItem::Run()
         const auto isDone = checker_();
         SetState(isDone ? State::kDone : State::kFail);
         SetEnable(true);
-        emit OnStateChanged(id_, isDone);
+        emit stateChanged(id_, isDone);
     }).detach();
 }
 
@@ -116,7 +129,7 @@ bool TaskItem::IsEnabled()
 TaskItem* TaskItem::SetEnable(const bool enable)
 {
     isEnabled_ = enable;
-    emit onEnableChanged();
+    emit enableChanged();
     return this;
 }
 
@@ -130,4 +143,37 @@ TaskItem* TaskItem::SetTask(const Task task, const Checker checker)
     task_ = task;
     checker_ = checker;
     return this;
+}
+
+TaskItem::Builder& TaskItem::Builder::SetID(const ID id) noexcept
+{
+  id_ = id;
+  return *this;
+}
+
+TaskItem::Builder& TaskItem::Builder::SetTask(const Task task, const Checker checker) noexcept
+{
+  task_ = task;
+  checker_ = checker;
+  return *this;
+}
+
+TaskItem::Builder& TaskItem::Builder::SetTitle(const QString title) noexcept
+{
+  title_ = title;
+  return *this;
+}
+
+TaskItem* TaskItem::Builder::Build()
+{
+  TaskItem* taskItem = new TaskItem();
+
+  if (nullptr != taskItem) {
+      taskItem->SetTitle(title_);
+      taskItem->SetTask(task_, checker_);
+      taskItem->SetID(id_);
+      taskItem->SetEnable(false);
+  }
+
+  return taskItem;
 }

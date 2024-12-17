@@ -38,17 +38,16 @@ QVariantList Page::GetTaskList()
 }
 
 void Page::AddTask(
-        const int taskID,
-        const QString title,
-        const TaskItem::Task task,
-        const TaskItem::Checker checker)
+    const int taskID,
+    const QString title,
+    const TaskItem::Task task,
+    const TaskItem::Checker checker)
 {
     QObject::connect(&task_container_, &TaskContainer::listChanged, this, &Page::taskListChanged);
     task_container_.AddTask(taskID, title, task, checker);
 }
 
 // TODO(MN): Remove the duplicate interface connection APIs like this.
-// Use a get task container and call direct in QML file
 void Page::RemoveTask(const int taskID)
 {
     task_container_.RemoveTask(taskID);
