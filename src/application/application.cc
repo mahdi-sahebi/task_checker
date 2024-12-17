@@ -42,7 +42,7 @@ void AppInitiator::initialize()
 
 void AppInitiator::createPage1()
 {
-    auto page_1 = page_container_.Add(0, "Page 1");
+    auto page_1 = page_container_.Add(0, "Title 1");
     page_1->ClearTasks();
 
     static bool result_1 = false;
@@ -139,7 +139,7 @@ void AppInitiator::createPage1()
 
 void AppInitiator::createPage2()
 {
-    auto page_2 = page_container_.Add(1, "Page 2");
+    auto page_2 = page_container_.Add(1, "Title 2");
     page_2->ClearTasks();
 
     static bool result_1 = false;
@@ -158,6 +158,6 @@ void AppInitiator::createPage2()
 
 void AppInitiator::createPage3()
 {
-    auto page_3 = page_container_.Add(3, "Page 3");
+    auto page_3 = page_container_.Add(3, "Title 3");
     (void)page_3;
 }

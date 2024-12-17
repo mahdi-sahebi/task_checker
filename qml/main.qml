@@ -9,9 +9,10 @@ Window
     visible: true
     width: 600
     height: 800
+    minimumWidth: 600
+    minimumHeight: 800
     title: "Hello World"
     color: "#f0f0f0"
-    // TODO(MN): Manage resizing
 
     Row {
         anchors.fill: parent
@@ -36,6 +37,14 @@ Window
                     page_list.gotoPreviousPage();
                 }
             }
+
+            Text {
+                anchors.centerIn: parent
+                text: "Page: " + (page_list.getCurrentIndex() + 1) + "/" + page_list.getCount()
+                font.pointSize: 18
+                color: "#303030"
+            }
+
             Button {
                 width: 40
                 height: 40

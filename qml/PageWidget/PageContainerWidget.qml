@@ -20,6 +20,16 @@ Rectangle {
         }
     }
 
+    function getCount()
+    {
+        return swipe.count;
+    }
+
+    function getCurrentIndex()
+    {
+        return swipe.currentIndex;
+    }
+
     SwipeView {
         id: swipe
         anchors.fill: parent
