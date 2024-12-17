@@ -7,7 +7,7 @@
 using namespace std;
 
 TaskItem::TaskItem(QObject* parent) :
-    is_enabled_{true}, task_{nullptr}, checker_{nullptr}, id_{0}
+    isEnabled_{true}, task_{nullptr}, checker_{nullptr}, id_{0}
 {
   (void)parent;
   SetState(State::kFail);
@@ -105,17 +105,17 @@ QString TaskItem::GetImagePath()
 void TaskItem::SetImagePath(const QString& imagePath)
 {
   imagePath_ = imagePath;
-  emit OnImagePathChanged();
+  emit imagePathChanged();
 }
 
 bool TaskItem::IsEnabled()
 {
-    return is_enabled_;
+    return isEnabled_;
 }
 
 TaskItem* TaskItem::SetEnable(const bool enable)
 {
-    is_enabled_ = enable;
+    isEnabled_ = enable;
     emit onEnableChanged();
     return this;
 }

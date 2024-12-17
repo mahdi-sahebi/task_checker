@@ -14,7 +14,7 @@ class TaskItem : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY titleChanged)
-    Q_PROPERTY(QString imagePath READ GetImagePath WRITE SetImagePath NOTIFY OnImagePathChanged)
+    Q_PROPERTY(QString imagePath READ GetImagePath WRITE SetImagePath NOTIFY imagePathChanged)
     Q_PROPERTY(bool isEnabled READ IsEnabled() WRITE SetEnable NOTIFY onEnableChanged)
 
 public:
@@ -27,7 +27,7 @@ public:
 
   using Checker = std::function<bool()>;
   using Task = std::function<void()>;
-  using ID = uint32_t;// TODO(MN): Use
+  using ID = uint32_t;
 
   explicit TaskItem(QObject* parent = nullptr);
   TaskItem(const TaskItem&) = delete;
@@ -36,7 +36,7 @@ public:
 
   static TaskItem* Build();// TOOD(MN): Use separate class
 
-  void SetID(const uint32_t id);// TODO(MN): Only for Builder
+  void SetID(const uint32_t id);
   uint32_t GetID();
   QString GetTitle();
   TaskItem* SetTitle(const QString& title);
@@ -51,14 +51,14 @@ public:
 
 signals:
   void titleChanged();
-  void OnImagePathChanged();
+  void imagePathChanged();
   void onEnableChanged();
   void OnIDChanged();
   void OnStateChanged(const unsigned int id, const bool isDone);
 
 private:
   ID id_;
-  bool is_enabled_;
+  bool isEnabled_;
   QString title_;
   QString imagePath_;
   Task task_;
