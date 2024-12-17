@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>PageWidget/TaskItemWidget/assets/false.png</file>
+        <file>PageWidget/TaskItemWidget/assets/true.png</file>
+        <file>PageWidget/TaskItemWidget/assets/wait.png</file>
+        <file>PageWidget/TaskItemWidget/TaskItemWidget.qml</file>
+        <file>PageWidget/PageWidget.qml</file>
+        <file>PageWidget/PageContainerWidget.qml</file>
+        <file>PageWidget/ProgressBar.qml</file>
+        <file>Button.qml</file>
+        <file>PageWidget/Wait.qml</file>
+    </qresource>
+</RCC>
