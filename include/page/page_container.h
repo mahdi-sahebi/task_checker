@@ -7,10 +7,11 @@
 #include <QVariantList>
 #include "page/page.h"
 
+
 class PageContainer : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(QVariantList list READ GetList NOTIFY OnListChanged)
+  Q_PROPERTY(QVariantList list READ GetList NOTIFY listChanged)
 
 public:
     PageContainer();
@@ -25,7 +26,7 @@ public:
     QVariantList GetList();
 
 signals:
-    void OnListChanged();
+    void listChanged();
 
 private:
     QVariantList list_;

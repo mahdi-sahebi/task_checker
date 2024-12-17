@@ -11,16 +11,17 @@
 #include <QString>
 #include <QObject>
 #include <QVariantList>
-#include <task_item/task_container.h>
+#include "task_item/task_container_interface.h"
+#include "task_item/task_container.h"
 
 
-class Page : public QObject
+class Page : public TaskContainerInterface
 {
     Q_OBJECT
-    Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY OnTitleChanged)
-    Q_PROPERTY(unsigned int tasks_count READ GetTasksCount NOTIFY OnTasksCountChanged)
-    Q_PROPERTY(QVariantList taskList READ GetTaskList NOTIFY onTaskListChanged)
-    Q_PROPERTY(float progress READ getProgress NOTIFY progressChanged)
+    Q_PROPERTY(QString title READ GetTitle WRITE SetTitle NOTIFY titleChanged)
+    Q_PROPERTY(unsigned int tasks_count READ GetTasksCount NOTIFY tasksCountChanged)
+    Q_PROPERTY(QVariantList taskList READ GetTaskList NOTIFY taskListChanged)
+    Q_PROPERTY(float progress READ GetProgressPercent NOTIFY progressChanged)
 
 public:
     Page();
@@ -28,28 +29,27 @@ public:
     Page& operator=(const Page&) = delete;
     ~Page();
 
-    QString GetTitle() const noexcept;
-    void SetTitle(const QString& title);
-    unsigned int GetTasksCount() const noexcept;
-
-    QVariantList GetTaskList();
-    void AddTask(const uint8_t task_id,
+    Q_INVOKABLE void AddTask(const int taskID,
                  const QString title,
                  const TaskItem::Task task,
-                 const TaskItem::Checker checker);
-    void RemoveTask(const uint8_t task_id);
-    void ClearTasks();
+                 const TaskItem::Checker checker) override;
+    Q_INVOKABLE void RemoveTask(const int taskID) override;
+    Q_INVOKABLE void ClearTasks() noexcept override;
+    Q_INVOKABLE int GetTasksCount() const noexcept override;
+    float GetProgressPercent() const noexcept override;
 
+    QString GetTitle() const noexcept;
+    void SetTitle(const QString& title);
+
+    QVariantList GetTaskList();
     void SetID(const unsigned int id) noexcept;
     unsigned int GetID() const noexcept;
     Q_INVOKABLE void CheckTasks() noexcept;
-    float getProgress() const noexcept;
 
 signals:
-    void OnTitleChanged();
+    void titleChanged();
     void progressChanged();
-    void OnTasksCountChanged();
-    void onTaskListChanged();
+    void tasksCountChanged();
     void checkTasksBegan();
     void checkTasksEnded();
 

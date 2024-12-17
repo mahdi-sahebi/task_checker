@@ -42,7 +42,7 @@ void AppInitiator::initialize()
 
 void AppInitiator::createPage1()
 {
-    auto page_1 = page_container_.Add(0, "Page 1");
+    auto page_1 = page_container_.Add(0, "Title 1");
     page_1->ClearTasks();
 
     static bool result_1 = false;
@@ -54,7 +54,7 @@ void AppInitiator::createPage1()
             result_1 = !result_1;
         },
         []() {
-            sleep_for(milliseconds(2750));
+            sleep_for(milliseconds(1950));
             return result_1;
         });
 
@@ -63,11 +63,11 @@ void AppInitiator::createPage1()
         101,
         "Task description 101",
         []() {
-            sleep_for(milliseconds(5000));
+            sleep_for(milliseconds(4100));
             result_2 = !result_2;
         },
         []() {
-            sleep_for(milliseconds(6600));
+            sleep_for(milliseconds(3300));
             return result_2;
         });
 
@@ -80,14 +80,66 @@ void AppInitiator::createPage1()
             result_3 = !result_3;
         },
         []() {
-            sleep_for(milliseconds(1075));
+            sleep_for(milliseconds(675));
             return result_3;
+        });
+
+    static bool result_4 = false;
+    page_1->AddTask(
+        103,
+        "Task description 104",
+        []() {
+            sleep_for(milliseconds(400));
+            result_4 = !result_4;
+        },
+        []() {
+            sleep_for(milliseconds(2675));
+            return result_4;
+        });
+
+    static bool result_5 = false;
+    page_1->AddTask(
+        104,
+        "Task description 105",
+        []() {
+            sleep_for(milliseconds(60));
+            result_5 = !result_5;
+        },
+        []() {
+            sleep_for(milliseconds(75));
+            return result_5;
+        });
+
+    static bool result_6 = false;
+    page_1->AddTask(
+        105,
+        "Task description 106",
+        []() {
+            sleep_for(milliseconds(2060));
+            result_6 = !result_6;
+        },
+        []() {
+            sleep_for(milliseconds(2075));
+            return result_6;
+        });
+
+    static bool result_7 = false;
+    page_1->AddTask(
+        106,
+        "Task description 107",
+        []() {
+            sleep_for(milliseconds(1060));
+            result_7 = !result_7;
+        },
+        []() {
+            sleep_for(milliseconds(1075));
+            return result_7;
         });
 }
 
 void AppInitiator::createPage2()
 {
-    auto page_2 = page_container_.Add(1, "Page 2");
+    auto page_2 = page_container_.Add(1, "Title 2");
     page_2->ClearTasks();
 
     static bool result_1 = false;
@@ -106,6 +158,6 @@ void AppInitiator::createPage2()
 
 void AppInitiator::createPage3()
 {
-    auto page_3 = page_container_.Add(3, "Page 3");
+    auto page_3 = page_container_.Add(3, "Title 3");
     (void)page_3;
 }
